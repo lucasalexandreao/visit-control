@@ -2,7 +2,17 @@
 
 <h1>New visit</h1>
 
-<%= render "form", visit: @visit %>
+<%= render "search" %>
+
+<% if @visitor.persisted? %>
+  <%= render "visitors/visitor_details" %>
+  <%= render "form", visit: @visit %>
+<% elsif params[:cpf].present? %>
+  <p>Visitante não encontrado.</p>
+  <%= render "form", visit: @visit %>
+<% end %>
+
+
 
 <br>
 

@@ -13,6 +13,7 @@ class VisitsController < ApplicationController
   # GET /visits/new
   def new
     @visit = Visit.new
+    @visitor = Visitor.new
   end
 
   # GET /visits/1/edit
@@ -21,7 +22,12 @@ class VisitsController < ApplicationController
 
   # POST /visits or /visits.json
   def create
-    @visit = Visit.new(visit_params)
+    #@visit = Visit.new(visit_params)
+    @visitor = Visitor.find_by(cpf: visit_params[:visitor_attributes][:cpf])
+    @visitor ||= Visitor.new(visit_params[:visitor_attributes]) # Cria um novo visitante se não existir
+
+    @visit = Visit.new(visit_params.except(:visitor_attributes)) # Cria a visita sem os atributos do visitante
+    @visit.visitor = @visitor
 
     respond_to do |format|
       if @visit.save
@@ -57,6 +63,18 @@ class VisitsController < ApplicationController
     end
   end
 
+  def search
+    @visitor = Visitor.find_by(cpf: params[:cpf])
+    if @visitor
+      @visitor_encontrado = true # Indica que o visitante foi encontrado
+    else
+      @visitor = Visitor.new # Cria um novo visitante se não for encontrado
+      @visitor_encontrado = false
+    end
+    @visit = Visit.new(visitor: @visitor) # Associa o visitante à visita
+    render :new # Renderiza a view 'new' novamente com os resultados
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_visit
@@ -65,6 +83,6 @@ class VisitsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def visit_params
-      params.expect(visit: [ :confirmed_time, :visitor_id, :unit_id, :sector_id, :employee_id ])
+      params.expect(visit: [ :confirmed_time, :unit_id, :sector_id, :employee_id, visitor_attributes: [ :cpf, :name, :rg, :phone, :photo ] ])
     end
 end

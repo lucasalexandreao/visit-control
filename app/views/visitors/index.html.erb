@@ -4,6 +4,14 @@
 
 <h1>Visitors</h1>
 
+<%= render "search" %>
+
+<% if @visitor %>
+  <%= render "visitor_details" %>
+<% elsif params[:cpf].present? %>
+  <p>Visitante não encontrado.</p>
+<% end %>
+
 <div id="visitors">
   <% @visitors.each do |visitor| %>
     <%= render visitor %>

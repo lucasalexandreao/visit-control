@@ -1,11 +1,19 @@
 Rails.application.routes.draw do
-  root "visitors#index"
-  resources :visits
-  resources :employees
+  root "visits#index"
   devise_for :users
-  resources :visitors
+  resources :employees
   resources :sectors
   resources :units
+  resources :visits do
+    collection do
+      get :search
+    end
+  end
+  resources :visitors do
+    collection do
+      get :search
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

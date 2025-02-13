@@ -58,6 +58,11 @@ class VisitorsController < ApplicationController
     end
   end
 
+  def search
+    @visitor = Visitor.find_by(cpf: params[:cpf])
+    render :index
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_visitor

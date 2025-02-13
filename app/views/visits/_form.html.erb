@@ -11,14 +11,64 @@
     </div>
   <% end %>
 
+
+  <!--<div>
+    <%= form.label :visitor_id, style: "display: block" %>
+    <%= form.text_field :visitor_id %>
+  </div> -->
+  <% if @visitor_encontrado %>
+  <!-- Campos ocultos para enviar os dados do visitante -->
+    <%= form.hidden_field :visitor_id, value: @visitor.id %>
+    <%= form.fields_for :visitor, @visitor do |visitor_fields| %>
+      <%= visitor_fields.hidden_field :cpf %>
+      <%= visitor_fields.hidden_field :name %>
+      <%= visitor_fields.hidden_field :rg %>
+      <%= visitor_fields.hidden_field :phone %>
+      <%= visitor_fields.hidden_field :photo %>
+    <% end %>
+  <% else %>
+  <%= form.fields_for :visitor, @visitor do |visitor_fields| %>
+
+      <div>
+        <%= visitor_fields.label :cpf, style: "display: block" %>
+        <%= visitor_fields.text_field :cpf %>
+      </div>
+
+      <div>
+        <%= visitor_fields.label :name, style: "display: block" %>
+        <%= visitor_fields.text_field :name %>
+      </div>
+
+      <div>
+        <%= visitor_fields.label :rg, style: "display: block" %>
+        <%= visitor_fields.text_field :rg %>
+      </div>
+
+      <div>
+        <%= visitor_fields.label :phone, style: "display: block" %>
+        <%= visitor_fields.text_field :phone %>
+      </div>
+
+      <div class="field">
+        <%= visitor_fields.label :photo %>
+        <%= visitor_fields.file_field :photo, id: "photo-input" %> <!-- Campo de upload de arquivo -->
+      </div>
+
+      <!-- Captura de foto via webcam -->
+      <div class="field" data-controller="camera">
+        <label>Capturar Foto via Webcam</label>
+        <button type="button" id="activate-camera">Ativar Câmera</button>
+        <video id="webcam" autoplay style="display:none;"></video>
+        <button type="button" id="capture-photo" style="display:none;">Capturar Foto</button>
+        <canvas id="canvas" style="display:none;"></canvas>
+      </div>
+
+    <% end %>
+    <% end %>
+
   <div>
     <%= form.label :confirmed_time, style: "display: block" %>
     <%= form.datetime_field :confirmed_time %>
-  </div>
-
-  <div>
-    <%= form.label :visitor_id, style: "display: block" %>
-    <%= form.text_field :visitor_id %>
   </div>
 
   <div>

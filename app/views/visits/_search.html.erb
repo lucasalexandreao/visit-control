@@ -1,0 +1,5 @@
+<%= form_with url: search_visits_path, method: :get, local: true do |form| %>
+  <%= form.label :cpf, "Buscar Visitante por CPF:" %>
+  <%= form.text_field :cpf %>
+  <%= form.submit "Buscar" %>
+<% end %>
