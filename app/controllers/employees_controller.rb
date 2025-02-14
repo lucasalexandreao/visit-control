@@ -13,6 +13,7 @@ class EmployeesController < ApplicationController
   # GET /employees/new
   def new
     @employee = Employee.new
+    @employee.build_user(role: 2)
   end
 
   # GET /employees/1/edit
@@ -22,6 +23,13 @@ class EmployeesController < ApplicationController
   # POST /employees or /employees.json
   def create
     @employee = Employee.new(employee_params)
+
+    if @employee.user.nil?
+      @employee.build_user  # Se não foi construído corretamente, cria um novo User
+    end
+
+    @employee.user.role = 2  # Garante que o usuário é do tipo funcionário
+
 
     respond_to do |format|
       if @employee.save
@@ -65,6 +73,6 @@ class EmployeesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def employee_params
-      params.expect(employee: [ :cpf, :name, :sector_id, :user_id ])
+      params.expect(employee: [ :cpf, :name, :sector_id, user_attributes: [ :id, :email, :password, :password_confirmation ] ])
     end
 end

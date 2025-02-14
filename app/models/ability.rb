@@ -12,7 +12,8 @@ class Ability
       can :manage, Visit, unit_id: user.unit_id
       can :manage, Visitor
     elsif user.employee?
-      can [ :read, :update ], Visit
+      can :read, Visit, employee_id: user.employee.id, confirmed_time: nil
+      can :confirm, Visit, employee_id: user.employee.id, confirmed_time: nil
     end
   end
     # Define abilities for the user here. For example:

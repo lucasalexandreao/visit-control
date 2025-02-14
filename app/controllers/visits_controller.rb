@@ -3,7 +3,11 @@ class VisitsController < ApplicationController
 
   # GET /visits or /visits.json
   def index
-    @visits = Visit.all
+    if current_user.employee?
+      @visits = Visit.accessible_by(current_ability)
+    else
+      @visits = Visit.all
+    end
   end
 
   # GET /visits/1 or /visits/1.json
@@ -22,7 +26,7 @@ class VisitsController < ApplicationController
 
   # POST /visits or /visits.json
   def create
-    #@visit = Visit.new(visit_params)
+    # @visit = Visit.new(visit_params)
     @visitor = Visitor.find_by(cpf: visit_params[:visitor_attributes][:cpf])
     @visitor ||= Visitor.new(visit_params[:visitor_attributes]) # Cria um novo visitante se não existir
 
@@ -73,6 +77,13 @@ class VisitsController < ApplicationController
     end
     @visit = Visit.new(visitor: @visitor) # Associa o visitante à visita
     render :new # Renderiza a view 'new' novamente com os resultados
+  end
+
+  def confirm
+    @visit = Visit.find(params[:id])
+    authorize! :confirm, @visit # Verifica se o usuário pode confirmar a visita
+    @visit.confirm!
+    redirect_to visits_path, notice: "Visita confirmada com sucesso."
   end
 
   private
