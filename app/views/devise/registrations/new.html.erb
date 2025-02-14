@@ -21,6 +21,11 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
+  <div>
+    <%= f.label :unit_id, style: "display: block" %>
+    <%= f.text_field :unit_id %>
+  </div>
+
   <div class="field">
   <%= f.label :role, "Papel" %>
   <%= f.select :role, User.roles.keys.first(2).map { |role| [role.humanize, role] } %>

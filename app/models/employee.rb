@@ -5,8 +5,19 @@ class Employee < ApplicationRecord
   accepts_nested_attributes_for :user
   before_update :destroy_user_if_inactive
   before_save :create_user_if_activated
+  validate :sector_must_be_active, if: :activating_employee?
 
-  private
+  def inactive?
+    !self.active
+  end
+
+  def deactivate!
+    update(active: false)
+  end
+
+  def activate!
+    update(active: true)
+  end
 
   def destroy_user_if_inactive
     if active_changed? && !active? && user.present?
@@ -29,5 +40,15 @@ class Employee < ApplicationRecord
     domain = "empresa.com"
     count = User.where("email LIKE ?", "#{base_email}%").count
     count > 0 ? "#{base_email}_#{count}@#{domain}" : "#{base_email}@#{domain}"
+  end
+
+  def sector_must_be_active
+    if sector && !sector.active
+      errors.add(:base, "Não é possível ativar um funcionário cujo setor está desativado.")
+    end
+  end
+
+  def activating_employee?
+    active_changed? && active
   end
 end
