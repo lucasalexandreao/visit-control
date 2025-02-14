@@ -31,32 +31,6 @@
     <%= form.check_box :active %>
   </div>
 
-  <p>Valor enviado para active: <%= params[:employee][:active] if params[:employee] %></p>
-
-  <%= form.fields_for :user do |user_fields| %>
-
-    <%= user_fields.hidden_field :id %>
-
-    <div class="field">
-      <%= user_fields.label :email %><br />
-      <%= user_fields.email_field :email, autofocus: true, autocomplete: "email" %>
-    </div>
-
-    <div class="field">
-      <%= user_fields.label :password %>
-      <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em>
-      <% end %><br />
-      <%= user_fields.password_field :password, autocomplete: "new-password" %>
-    </div>
-
-    <div class="field">
-      <%= user_fields.label :password_confirmation %><br />
-      <%= user_fields.password_field :password_confirmation, autocomplete: "new-password" %>
-    </div>
-
-  <% end %>
-
   <div>
     <%= form.submit %>
   </div>
