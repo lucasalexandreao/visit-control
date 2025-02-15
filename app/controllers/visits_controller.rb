@@ -68,6 +68,9 @@ class VisitsController < ApplicationController
   end
 
   def search
+    @active_units = Unit.where(active: true)
+    @active_sectors = Sector.where(active: true)
+    @active_employees = Employee.where(active: true)
     @visitor = Visitor.find_by(cpf: params[:cpf])
     if @visitor
       @visitor_encontrado = true # Indica que o visitante foi encontrado

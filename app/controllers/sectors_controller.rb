@@ -14,10 +14,13 @@ class SectorsController < ApplicationController
   # GET /sectors/new
   def new
     @sector = Sector.new
+    @active_units = Unit.where(active: true) # Filtra apenas unidades ativas
   end
 
   # GET /sectors/1/edit
   def edit
+    @sector = Sector.find(params[:id])
+    @active_units = Unit.where(active: true).or(Unit.where(id: @sector.unit_id))
   end
 
   # POST /sectors or /sectors.json
@@ -29,6 +32,8 @@ class SectorsController < ApplicationController
         format.html { redirect_to @sector, notice: "Sector was successfully created." }
         format.json { render :show, status: :created, location: @sector }
       else
+        @active_units = Unit.where(active: true)
+        set_units
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @sector.errors, status: :unprocessable_entity }
       end
@@ -42,6 +47,7 @@ class SectorsController < ApplicationController
         format.html { redirect_to @sector, notice: "Sector was successfully updated." }
         format.json { render :show, status: :ok, location: @sector }
       else
+        @active_units = Unit.where(active: true).or(Unit.where(id: @sector.unit_id))
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @sector.errors, status: :unprocessable_entity }
       end

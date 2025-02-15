@@ -21,9 +21,9 @@
     <%= form.text_field :name %>
   </div>
 
-  <div>
-    <%= form.label :sector_id, style: "display: block" %>
-    <%= form.text_field :sector_id %>
+  <div class="field">
+    <%= form.label :sector_id, style: "display:block" %>
+    <%= form.collection_select :sector_id, @active_sectors || [], :id, :name, prompt: "Selecione um setor" %>
   </div>
 
   <%= form.fields_for :user do |user_fields| %>

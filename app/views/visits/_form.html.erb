@@ -12,10 +12,7 @@
   <% end %>
 
 
-  <!--<div>
-    <%= form.label :visitor_id, style: "display: block" %>
-    <%= form.text_field :visitor_id %>
-  </div> -->
+
   <% if @visitor_encontrado %>
   <!-- Campos ocultos para enviar os dados do visitante -->
     <%= form.hidden_field :visitor_id, value: @visitor.id %>
@@ -66,24 +63,26 @@
     <% end %>
     <% end %>
 
+<!--
   <div>
     <%= form.label :confirmed_time, style: "display: block" %>
     <%= form.datetime_field :confirmed_time %>
+  </div> -->
+  <%= form.hidden_field :confirmed_time %>
+
+  <div class="field">
+    <%= form.label :unit_id, style: "display:block" %>
+    <%= form.collection_select :unit_id, @active_units || [], :id, :name, prompt: "Selecione uma unidade" %>
   </div>
 
-  <div>
-    <%= form.label :unit_id, style: "display: block" %>
-    <%= form.text_field :unit_id %>
+  <div class="field">
+    <%= form.label :sector_id, style: "display:block" %>
+    <%= form.collection_select :sector_id, @active_sectors || [], :id, :name, prompt: "Selecione um setor" %>
   </div>
 
-  <div>
-    <%= form.label :sector_id, style: "display: block" %>
-    <%= form.text_field :sector_id %>
-  </div>
-
-  <div>
-    <%= form.label :employee_id, style: "display: block" %>
-    <%= form.text_field :employee_id %>
+  <div class="field">
+    <%= form.label :employee_id, style: "display:block" %>
+    <%= form.collection_select :employee_id, @active_employees || [], :id, :name, prompt: "Selecione um funcionário" %>
   </div>
 
   <div>

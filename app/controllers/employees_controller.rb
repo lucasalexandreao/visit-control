@@ -14,10 +14,12 @@ class EmployeesController < ApplicationController
   def new
     @employee = Employee.new
     @employee.build_user(role: 2)
+    @active_sectors = Sector.where(active: true)
   end
 
   # GET /employees/1/edit
   def edit
+    @active_sectors = Sector.where(active: true).or(Sector.where(id: @employee.sector_id))
   end
 
   # POST /employees or /employees.json
@@ -36,6 +38,7 @@ class EmployeesController < ApplicationController
         format.html { redirect_to @employee, notice: "Employee was successfully created." }
         format.json { render :show, status: :created, location: @employee }
       else
+        @active_sectors = Sector.where(active: true)
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @employee.errors, status: :unprocessable_entity }
       end
@@ -49,6 +52,7 @@ class EmployeesController < ApplicationController
         format.html { redirect_to @employee, notice: "Employee was successfully updated." }
         format.json { render :show, status: :ok, location: @employee }
       else
+        @active_sectors = Sector.where(active: true).or(Sector.where(id: @employee.sector_id))
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @employee.errors, status: :unprocessable_entity }
       end
