@@ -76,6 +76,6 @@ class SectorsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def sector_params
-      params.expect(sector: [ :name, :unit_id, :active ])
+      params.expect(sector: [ :email, :password, :password_confirmation, :unit_id, :active ])
     end
 end
