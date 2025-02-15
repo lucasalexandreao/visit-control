@@ -19,10 +19,16 @@ class VisitsController < ApplicationController
   def new
     @visit = Visit.new
     @visitor = Visitor.new
+    @active_units = Unit.where(active: true)
+    @active_sectors = Sector.where(active: true, unit_id: current_user.unit_id)
+    @active_employees = Employee.where(active: true)
   end
 
   # GET /visits/1/edit
   def edit
+    @active_units = Unit.where(active: true).or(Unit.where(id: @visit.unit_id))
+    @active_sectors = Sector.where(active: true, unit_id: current_user.unit_id).or(Sector.where(id: @visit.sector_id))
+    @active_employees = Employee.where(active: true).or(Employee.where(id: @visit.employee_id))
   end
 
   # POST /visits or /visits.json
@@ -39,6 +45,9 @@ class VisitsController < ApplicationController
         format.html { redirect_to @visit, notice: "Visit was successfully created." }
         format.json { render :show, status: :created, location: @visit }
       else
+        @active_units = Unit.where(active: true)
+        @active_sectors = Sector.where(active: true, unit_id: current_user.unit_id)
+        @active_employees = Employee.where(active: true)
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @visit.errors, status: :unprocessable_entity }
       end
@@ -52,6 +61,9 @@ class VisitsController < ApplicationController
         format.html { redirect_to @visit, notice: "Visit was successfully updated." }
         format.json { render :show, status: :ok, location: @visit }
       else
+        @active_units = Unit.where(active: true).or(Unit.where(id: @visit.unit_id))
+        @active_sectors = Sector.where(active: true, unit_id: current_user.unit_id).or(Sector.where(id: @visit.sector_id))
+        @active_employees = Employee.where(active: true).or(Employee.where(id: @visit.employee_id))
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @visit.errors, status: :unprocessable_entity }
       end
@@ -70,7 +82,7 @@ class VisitsController < ApplicationController
 
   def search
     @active_units = Unit.where(active: true)
-    @active_sectors = Sector.where(active: true)
+    @active_sectors = Sector.where(active: true, unit_id: current_user.unit_id)
     @active_employees = Employee.where(active: true)
     @visitor = Visitor.find_by(cpf: params[:cpf])
     if @visitor

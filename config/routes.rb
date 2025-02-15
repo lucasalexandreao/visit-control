@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   root "visits#index"
   devise_for :users
+  resources :users
   resources :employees
-  resources :sectors
   resources :units
+  resources :sectors
   resources :visits do
     collection do
       get :search

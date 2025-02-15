@@ -64,6 +64,11 @@ class SectorsController < ApplicationController
     end
   end
 
+  def employees
+    @employees = Employee.where(sector_id: params[:id])
+    render json: @employees.select(:id, :name)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_sector
@@ -76,6 +81,6 @@ class SectorsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def sector_params
-      params.expect(sector: [ :email, :password, :password_confirmation, :unit_id, :active ])
+      params.expect(sector: [ :name, :unit_id, :active ])
     end
 end

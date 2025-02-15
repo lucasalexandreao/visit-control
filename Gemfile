@@ -65,3 +65,6 @@ end
 
 gem "devise", "~> 4.9"
 gem "cancancan"
+
+# gem "gem", "~> 0.0.1.alpha"
+gem "select2-rails", "~> 4.0"

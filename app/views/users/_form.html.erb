@@ -1,0 +1,57 @@
+<%= form_with(model: @user, local: true) do |form| %>
+    <% if user.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+        <ul>
+          <% user.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div>
+      <%= form.label :email %>
+      <%= form.email_field :email %>
+    </div>
+  
+    <div>
+      <%= form.label :password %>
+      <%= form.password_field :password %>
+    </div>
+  
+    <div>
+      <%= form.label :password_confirmation %>
+      <%= form.password_field :password_confirmation %>
+    </div>
+  
+    <div>
+      <%= form.label :role %>
+      <%= form.select :role, User.roles.keys.select { |role| %w[admin attendant].include?(role) }.map { |role| [role.humanize, role] }, prompt: "Selecione um papel" %>
+    </div>
+
+    <div id="unit_field" style="display: none;">
+      <%= form.label :unit_id %>
+      <%= form.collection_select :unit_id, @active_units, :id, :name, prompt: "Selecione uma unidade" %>
+    </div>
+  
+    <%= form.submit %>
+  <% end %>
+  
+<script>
+ 
+  document.addEventListener("turbo:load", function() {
+    const role = document.querySelector("#user_role");
+    const unit = document.querySelector("#unit_field");
+
+    role.addEventListener("change", function() {
+      if (this.value === "attendant") {
+        unit.style.display = "block";
+      } else {
+        unit.style.display = "none";
+      }
+    });
+  });
+
+</script>

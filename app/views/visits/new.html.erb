@@ -5,13 +5,17 @@
 <%= render "search" %>
 
 <% if @visitor.persisted? %>
-  <%= render "visitors/visitor_details" %>
-  <%= render "form", visit: @visit %>
+  <% if @visitor.active == false %>
+    <p>Este visitante está inativo. Por favor, ative-o antes de cadastrar uma visita.</p>
+    <%= link_to "Editar visitante", edit_visitor_path(@visitor)%>
+  <% else %>
+    <%= render "visitors/visitor_details" %>
+    <%= render "form", visit: @visit %>
+  <% end %>
 <% elsif params[:cpf].present? %>
   <p>Visitante não encontrado.</p>
   <%= render "form", visit: @visit %>
 <% end %>
-
 
 
 <br>

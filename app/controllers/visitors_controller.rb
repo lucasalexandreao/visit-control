@@ -71,6 +71,6 @@ class VisitorsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def visitor_params
-      params.expect(visitor: [ :cpf, :name, :rg, :phone, :photo ])
+      params.expect(visitor: [ :cpf, :name, :rg, :phone, :photo, :active ])
     end
 end
