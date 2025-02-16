@@ -1,8 +1,7 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Visits" %>
 
-<h1>Visits</h1>
+<h1>Visitas</h1>
+<%= link_to "New visit", new_visit_path %>
 
 <div id="visits">
   <% @visits.each do |visit| %>
@@ -12,10 +11,9 @@
         <%= button_to "Confirmar", confirm_visit_path(visit), method: :post, class: "btn btn-success" %>
       <% end %>
       <p>
-        <%= link_to "Show this visit", visit %>
+        <%= link_to "Ver detalhes", visit %>
       </p>
     <% end %>
   <% end %>
 </div>
 
-<%= link_to "New visit", new_visit_path %>

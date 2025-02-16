@@ -1,95 +1,85 @@
-<%= form_with(model: visit) do |form| %>
-  <% if visit.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(visit.errors.count, "error") %> prohibited this visit from being saved:</h2>
+<div class="container d-flex justify-content-center mt-5">
+  <div class="col-md-8 col-lg-6 col-xl-5 p-4 border rounded shadow">
+    <%= form_with(model: visit, class: "needs-validation", novalidate: true) do |form| %>
+      <% if visit.errors.any? %>
+        <div class="alert alert-danger">
+          <h4 class="alert-heading"><%= pluralize(visit.errors.count, "erro") %> impediram esta visita de ser salva:</h4>
+          <ul>
+            <% visit.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-      <ul>
-        <% visit.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+      <% if @visitor_encontrado %>
+        <%= form.hidden_field :visitor_id, value: @visitor.id %>
+        <%= form.fields_for :visitor, @visitor do |visitor_fields| %>
+          <%= visitor_fields.hidden_field :cpf %>
+          <%= visitor_fields.hidden_field :name %>
+          <%= visitor_fields.hidden_field :rg %>
+          <%= visitor_fields.hidden_field :phone %>
+          <%= visitor_fields.hidden_field :photo %>
         <% end %>
-      </ul>
-    </div>
-  <% end %>
+      <% else %>
+        <%= form.fields_for :visitor, @visitor do |visitor_fields| %>
+          <div class="mb-3">
+            <%= visitor_fields.label :cpf, class: "form-label" %>
+            <%= visitor_fields.text_field :cpf, class: "form-control" %>
+          </div>
 
+          <div class="mb-3">
+            <%= visitor_fields.label :name, class: "form-label" %>
+            <%= visitor_fields.text_field :name, class: "form-control" %>
+          </div>
 
+          <div class="mb-3">
+            <%= visitor_fields.label :rg, class: "form-label" %>
+            <%= visitor_fields.text_field :rg, class: "form-control" %>
+          </div>
 
-  <% if @visitor_encontrado %>
-  <!-- Campos ocultos para enviar os dados do visitante -->
-    <%= form.hidden_field :visitor_id, value: @visitor.id %>
-    <%= form.fields_for :visitor, @visitor do |visitor_fields| %>
-      <%= visitor_fields.hidden_field :cpf %>
-      <%= visitor_fields.hidden_field :name %>
-      <%= visitor_fields.hidden_field :rg %>
-      <%= visitor_fields.hidden_field :phone %>
-      <%= visitor_fields.hidden_field :photo %>
+          <div class="mb-3">
+            <%= visitor_fields.label :phone, class: "form-label" %>
+            <%= visitor_fields.text_field :phone, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= visitor_fields.label :photo, class: "form-label" %>
+            <%= visitor_fields.file_field :photo, class: "form-control", id: "foto-input" %>
+          </div>
+
+          <!-- Captura de foto via webcam -->
+          <div class="mb-3 text-center" data-controller="camera">
+            <button type="button" class="btn btn-primary" id="ativar-camera">Ativar Câmera</button>
+            <video id="webcam" autoplay style="display: none; max-width: 100%; height: auto;" class="mt-3"></video>
+            <button type="button" class="btn btn-warning mt-2" id="capturar-foto" style="display: none;">Capturar Foto</button>
+            <button type="button" class="btn btn-danger mt-2" id="desligar-camera" style="display: none;">Desligar Câmera</button>
+            <canvas id="canvas" style="display: none; max-width: 100%; height: auto;"></canvas>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%= form.hidden_field :confirmed_time %>
+      <%= form.hidden_field :unit_id, value: current_user.unit_id %>
+
+      <div class="mb-3">
+        <%= form.label :sector_id, class: "form-label" %>
+        <%= form.collection_select :sector_id, @active_sectors || [], :id, :name, { prompt: "Selecione um setor" }, { id: 'sector_id', class: "form-select", onchange: "fetchEmployees(this.value)" } %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :employee_id, class: "form-label" %>
+        <%= form.collection_select :employee_id, @active_employees || [], :id, :name, { prompt: "Selecione um funcionário" }, { id: 'employee_id', class: "form-select" } %>
+      </div>
+
+      <div class="d-grid">
+        <%= form.submit "Salvar", class: "btn btn-success" %>
+      </div>
     <% end %>
-  <% else %>
-    <%= form.fields_for :visitor, @visitor do |visitor_fields| %>
-
-      <div>
-        <%= visitor_fields.label :cpf, style: "display: block" %>
-        <%= visitor_fields.text_field :cpf %>
-      </div>
-
-      <div>
-        <%= visitor_fields.label :name, style: "display: block" %>
-        <%= visitor_fields.text_field :name %>
-      </div>
-
-      <div>
-        <%= visitor_fields.label :rg, style: "display: block" %>
-        <%= visitor_fields.text_field :rg %>
-      </div>
-
-      <div>
-        <%= visitor_fields.label :phone, style: "display: block" %>
-        <%= visitor_fields.text_field :phone %>
-      </div>
-
-      <div class="field">
-        <%= visitor_fields.label :photo %>
-        <%= visitor_fields.file_field :photo, id: "foto-input" %> <!-- Campo de upload de arquivo -->
-      </div>
-
-      <!-- Captura de foto via webcam -->
-      <div class="field" data-controller="camera">
-        <button type="button" id="ativar-camera">Ativar Câmera</button>
-        <video id="webcam" autoplay style="display:none;"></video>
-        <button type="button" id="capturar-foto" style="display:none;">Capturar Foto</button>
-        <button type="button" id="desligar-camera" style="display:none;">Desligar Câmera</button>
-        <canvas id="canvas" style="display:none;"></canvas>
-      </div>
-
-    <% end %>
-  <% end %>
-
-<!--
-  <div>
-    <%= form.label :confirmed_time, style: "display: block" %>
-    <%= form.datetime_field :confirmed_time %>
-  </div> -->
-  <%= form.hidden_field :confirmed_time %>
-
- <!-- <div class="field">
-    <%= form.label :unit_id, style: "display:block" %>
-    <%= form.collection_select :unit_id, @active_units || [], :id, :name, prompt: "Selecione uma unidade" %>
-  </div>-->
-   <%= form.hidden_field :unit_id, value: current_user.unit_id %>
-
-  <div class="field">
-    <%= form.label :sector_id, style: "display:block" %>
-    <%= form.collection_select :sector_id, @active_sectors || [], :id, :name, { prompt: "Selecione um setor" }, { id: 'sector_id', onchange: "fetchEmployees(this.value)" } %>
   </div>
+</div>
 
-  <div class="field">
-    <%= form.label :employee_id, style: "display:block" %>
-    <%= form.collection_select :employee_id, @active_employees || [], :id, :name, { prompt: "Selecione um funcionário" }, { id: 'employee_id' } %>
-  </div>
 
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
 
 <script>
 

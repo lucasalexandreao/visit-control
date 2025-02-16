@@ -1,4 +1,18 @@
-<div>
-  <p><strong>Nome:</strong> <%= @visitor.name %></p>
-  <p><strong>CPF:</strong> <%= @visitor.cpf %></p>
+<div class="container d-flex justify-content-center">
+  <div class="card p-4" style="max-width: 400px; width: 100%; position: relative;">
+    <div class="card-body">
+      <% if @visitor.photo.present? %>
+        <div class="text-center" style="margin-bottom: 20px;">
+          <%= image_tag @visitor.photo.url, alt: "Foto do Visitante", class: "visitor-photo", style: "width: 100px; height: 100px; object-fit: cover; border-radius: 50%;" %>
+        </div>
+      <% else %>
+        <p class="text-center">Nenhuma foto cadastrada.</p>
+      <% end %>
+      
+      <p><strong>Nome:</strong> <%= @visitor.name %></p>
+      <p><strong>CPF:</strong> <%= @visitor.cpf %></p>
+      <p><strong>RG:</strong> <%= @visitor.rg %></p>
+      <p><strong>Telefone:</strong> <%= @visitor.phone %></p>
+    </div>
+  </div>
 </div>

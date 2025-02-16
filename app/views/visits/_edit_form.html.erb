@@ -1,50 +1,39 @@
-<%= form_with(model: visit) do |form| %>
-  <% if visit.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(visit.errors.count, "error") %> prohibited this visit from being saved:</h2>
-
-      <ul>
-        <% visit.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <%= form_with(model: visit, class: "needs-validation", novalidate: true) do |form| %>
+        <% if visit.errors.any? %>
+          <div class="alert alert-danger">
+            <h4 class="alert-heading"><%= pluralize(visit.errors.count, "erro") %> impediram esta visita de ser salva:</h4>
+            <ul>
+              <% visit.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
-      </ul>
+
+        <%= form.hidden_field :confirmed_time %>
+        <%= form.hidden_field :unit_id, value: current_user.unit_id %>
+
+        <div class="mb-3">
+          <%= form.label :sector_id, class: "form-label" %>
+          <%= form.collection_select :sector_id, @active_sectors || [], :id, :name, { prompt: "Selecione um setor" }, { class: "form-select", id: 'sector_id', onchange: "fetchEmployees(this.value)" } %>
+        </div>
+
+        <div class="mb-3">
+          <%= form.label :employee_id, class: "form-label" %>
+          <%= form.collection_select :employee_id, @active_employees || [], :id, :name, { prompt: "Selecione um funcionário" }, { class: "form-select", id: 'employee_id' } %>
+        </div>
+
+        <div class="d-grid">
+          <%= form.submit "Salvar", class: "btn btn-success" %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
-
-
-
-  <!-- Campos ocultos para enviar os dados do visitante -->
-  
-
-
-<!--
-  <div>
-    <%= form.label :confirmed_time, style: "display: block" %>
-    <%= form.datetime_field :confirmed_time %>
-  </div> -->
-  <%= form.hidden_field :confirmed_time %>
-
- <!-- <div class="field">
-    <%= form.label :unit_id, style: "display:block" %>
-    <%= form.collection_select :unit_id, @active_units || [], :id, :name, prompt: "Selecione uma unidade" %>
-  </div>-->
-   <%= form.hidden_field :unit_id, value: current_user.unit_id %>
-
-  <div class="field">
-    <%= form.label :sector_id, style: "display:block" %>
-    <%= form.collection_select :sector_id, @active_sectors || [], :id, :name, { prompt: "Selecione um setor" }, { id: 'sector_id', onchange: "fetchEmployees(this.value)" } %>
   </div>
+</div>
 
-  <div class="field">
-    <%= form.label :employee_id, style: "display:block" %>
-    <%= form.collection_select :employee_id, @active_employees || [], :id, :name, { prompt: "Selecione um funcionário" }, { id: 'employee_id' } %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
 
 <script>
   console.log("ta aparecendo")
