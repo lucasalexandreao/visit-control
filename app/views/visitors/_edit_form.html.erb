@@ -33,15 +33,15 @@
 
   <div class="field">
     <%= form.label :photo %>
-    <%= form.file_field :photo, id: "photo-input" %> <!-- Campo de upload de arquivo -->
+    <%= form.file_field :photo, id: "foto-input" %> <!-- Campo de upload de arquivo -->
   </div>
 
   <!-- Captura de foto via webcam -->
   <div class="field" data-controller="camera">
-    <label>Capturar Foto via Webcam</label>
-    <button type="button" id="activate-camera">Ativar Câmera</button>
+    <button type="button" id="ativar-camera">Ativar Câmera</button>
     <video id="webcam" autoplay style="display:none;"></video>
-    <button type="button" id="capture-photo" style="display:none;">Capturar Foto</button>
+    <button type="button" id="capturar-foto" style="display:none;">Capturar Foto</button>
+    <button type="button" id="desligar-camera" style="display:none;">Desligar Câmera</button>
     <canvas id="canvas" style="display:none;"></canvas>
   </div>
 
