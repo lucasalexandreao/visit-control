@@ -24,6 +24,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @active_units = Unit.where(active: true)
   end
 
   def update

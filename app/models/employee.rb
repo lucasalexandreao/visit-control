@@ -1,6 +1,6 @@
 class Employee < ApplicationRecord
   belongs_to :sector
-  belongs_to :user, dependent: :destroy, optional: true # O dependent não terá efeito, pois User não tem Employee
+  belongs_to :user, dependent: :destroy, optional: true
   has_many :visits
   accepts_nested_attributes_for :user
   before_update :destroy_user_if_inactive

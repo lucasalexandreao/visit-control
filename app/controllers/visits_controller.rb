@@ -102,6 +102,16 @@ class VisitsController < ApplicationController
     redirect_to visits_path, notice: "Visita confirmada com sucesso."
   end
 
+  def employee_filter
+    if params[:sector_id].present?
+      @employees = Employee.where(active: true, sector_id: params[:sector_id])
+    else
+      @employees = []
+    end
+
+    render json: @employees.map { |employee| { id: employee.id, name: employee.name } }
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_visit

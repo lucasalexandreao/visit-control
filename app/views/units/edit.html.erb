@@ -1,12 +1,13 @@
-<% content_for :title, "Editing unit" %>
+<% content_for :title, "Editar Unidade" %>
 
-<h1>Editing unit</h1>
+<div class="container d-flex justify-content-center mt-5">
+  <div class="col-md-10 col-lg-8 col-xl-7 p-5 border rounded shadow">
+    <h1 class="text-center mb-4">Editar Unidade</h1>
 
-<%= render "edit_form", unit: @unit %>
+    <div class="text-center mb-4">
+      <%= link_to "Voltar para unidades", units_path, class: "btn btn-secondary" %>
+    </div>
 
-<br>
-
-<div>
-  <%= link_to "Show this unit", @unit %> |
-  <%= link_to "Back to units", units_path %>
+    <%= render "edit_form", unit: @unit %>
+  </div>
 </div>

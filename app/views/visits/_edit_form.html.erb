@@ -16,15 +16,15 @@
         <%= form.hidden_field :confirmed_time %>
         <%= form.hidden_field :unit_id, value: current_user.unit_id %>
 
-        <div class="mb-3">
-          <%= form.label :sector_id, class: "form-label" %>
-          <%= form.collection_select :sector_id, @active_sectors || [], :id, :name, { prompt: "Selecione um setor" }, { class: "form-select", id: 'sector_id', onchange: "fetchEmployees(this.value)" } %>
-        </div>
+      <div class="mb-3">
+        <%= form.label :sector_id, class: "form-label" %>
+        <%= form.collection_select :sector_id, @active_sectors || [], :id, :name, { prompt: "Selecione um setor" }, { id: 'sector_id', class: "form-select", onchange: "fetchEmployeesEdit(this.value)" } %>
+      </div>
 
-        <div class="mb-3">
-          <%= form.label :employee_id, class: "form-label" %>
-          <%= form.collection_select :employee_id, @active_employees || [], :id, :name, { prompt: "Selecione um funcionário" }, { class: "form-select", id: 'employee_id' } %>
-        </div>
+      <div class="mb-3">
+        <%= form.label :employee_id, class: "form-label" %>
+        <%= form.collection_select :employee_id, @active_employees || [], :id, :name, { prompt: "Selecione um funcionário" }, { id: 'employee_id', class: "form-select" } %>
+      </div>
 
         <div class="d-grid">
           <%= form.submit "Salvar", class: "btn btn-success" %>
@@ -36,13 +36,16 @@
 
 
 <script>
-  console.log("ta aparecendo")
-  function fetchEmployees(sectorId) {
+
+
+
+  function fetchEmployeesEdit(sectorId) {
+  console.log("ta mudando");
   const employeeSelect = document.getElementById('employee_id');
 
   if (sectorId) {
     // Faz uma requisição AJAX para buscar os funcionários do setor selecionado
-    fetch(`/employees?sector_id=${sectorId}`)
+    fetch(`/visits/employee_filter?sector_id=${sectorId}`)
       .then(response => response.json())
       .then(data => {
         // Limpa as opções atuais do campo de funcionário

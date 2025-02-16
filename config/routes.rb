@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     member do
       post :confirm
     end
+    collection do
+      get :employee_filter
+    end
   end
   resources :visitors do
     collection do

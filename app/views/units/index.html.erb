@@ -3,6 +3,7 @@
 <% content_for :title, "Units" %>
 
 <h1>Units</h1>
+<%= link_to "Cadastrar unidade", new_unit_path %>
 
 <div id="units">
   <% @units.each do |unit| %>
@@ -13,4 +14,3 @@
   <% end %>
 </div>
 
-<%= link_to "New unit", new_unit_path %>

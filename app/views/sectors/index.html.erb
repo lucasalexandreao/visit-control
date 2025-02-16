@@ -1,8 +1,7 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Sectors" %>
 
 <h1>Sectors</h1>
+<%= link_to "New sector", new_sector_path %>
 
 <div id="sectors">
   <% @sectors.each do |sector| %>
@@ -16,4 +15,3 @@
   <% end %>
 </div>
 
-<%= link_to "New sector", new_sector_path %>

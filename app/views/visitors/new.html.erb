@@ -1,12 +1,13 @@
-<% content_for :title, "New visitor" %>
+<% content_for :title, "Cadastrar Visitante" %>
 
-<h1>New visitor</h1>
+<div class="container d-flex justify-content-center mt-5">
+  <div class="col-md-10 col-lg-8 col-xl-7 p-5 border rounded shadow">
+    <h1 class="text-center mb-4">Cadastrar Visitante</h1>
 
-<%= render "form", visitor: @visitor %>
+    <div class="text-center mb-4">
+      <%= link_to "Voltar para visitantes", visitors_path, class: "btn btn-secondary" %>
+    </div>
 
-<br>
-
-<div>
-  <%= link_to "Back to visitors", visitors_path %>
+    <%= render "form", visitor: @visitor %>
+  </div>
 </div>
-

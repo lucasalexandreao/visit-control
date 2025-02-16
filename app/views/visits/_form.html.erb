@@ -82,13 +82,11 @@
 
 
 <script>
-
   function fetchEmployees(sectorId) {
   const employeeSelect = document.getElementById('employee_id');
-
   if (sectorId) {
     // Faz uma requisição AJAX para buscar os funcionários do setor selecionado
-    fetch(`/employees?sector_id=${sectorId}`)
+    fetch(`/visits/employee_filter?sector_id=${sectorId}`)
       .then(response => response.json())
       .then(data => {
         // Limpa as opções atuais do campo de funcionário

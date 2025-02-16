@@ -1,11 +1,13 @@
-<% content_for :title, "New employee" %>
+<% content_for :title, "Cadastrar Funcionário" %>
 
-<h1>New employee</h1>
+<div class="container d-flex justify-content-center mt-5">
+  <div class="col-md-10 col-lg-8 col-xl-7 p-5 border rounded shadow">
+    <h1 class="text-center mb-4">Cadastrar Funcionário</h1>
 
-<%= render "form", employee: @employee %>
+    <div class="text-center mb-4">
+      <%= link_to "Voltar para funcionários", employees_path, class: "btn btn-secondary" %>
+    </div>
 
-<br>
-
-<div>
-  <%= link_to "Back to employees", employees_path %>
+    <%= render "form", employee: @employee %>
+  </div>
 </div>

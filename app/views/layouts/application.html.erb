@@ -33,24 +33,36 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <%= link_to "Visitas", visits_path, class: "nav-link #{"active" if current_page?(visits_path)}" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "Visitantes", visitors_path, class: "nav-link #{"active" if current_page?(visitors_path)}" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "Unidades", units_path, class: "nav-link #{"active" if current_page?(units_path)}" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "Setores", sectors_path, class: "nav-link #{"active" if current_page?(sectors_path)}" %>
-            </li>
-             <li class="nav-item">
-              <%= link_to "Funcionários", employees_path, class: "nav-link #{"active" if current_page?(employees_path)}" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "Usuários", users_path, class: "nav-link #{"active" if current_page?(users_path)}" %>
-            </li>
+            <%if can?(:read, Visit)%>
+              <li class="nav-item">
+                <%= link_to "Visitas", visits_path, class: "nav-link #{"active" if current_page?(visits_path)}" %>
+              </li>
+            <% end %>
+            <%if can?(:read, Visitor)%>
+              <li class="nav-item">
+                <%= link_to "Visitantes", visitors_path, class: "nav-link #{"active" if current_page?(visitors_path)}" %>
+              </li>
+            <% end %>
+            <%if can?(:read, Unit)%>
+              <li class="nav-item">
+                <%= link_to "Unidades", units_path, class: "nav-link #{"active" if current_page?(units_path)}" %>
+              </li>
+            <% end %>
+            <%if can?(:read, Sector)%>
+              <li class="nav-item">
+                <%= link_to "Setores", sectors_path, class: "nav-link #{"active" if current_page?(sectors_path)}" %>
+              </li>
+            <% end %>
+            <%if can?(:read, Employee)%>
+              <li class="nav-item">
+                <%= link_to "Funcionários", employees_path, class: "nav-link #{"active" if current_page?(employees_path)}" %>
+              </li>
+            <% end %>
+            <%if can?(:read, User)%>
+              <li class="nav-item">
+                <%= link_to "Usuários", users_path, class: "nav-link #{"active" if current_page?(users_path)}" %>
+              </li>
+            <% end %>
           </ul>
             <%= button_to "Sair", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
         </div>
@@ -60,15 +72,20 @@
 
 
     <div class="container mt-3">
-        <% if notice.present? %>
-          <p class="alert alert-success"><%= notice %></p>
-        <% end %>
+      <div class="d-flex justify-content-center">
+        <div style="max-width: 500px; width: 100%;">
+          <% if notice.present? %>
+            <p class="alert alert-success text-center"><%= notice %></p>
+          <% end %>
 
-        <% if alert.present? %>
-          <p class="alert alert-danger"><%= alert %></p>
-        <% end %>
-      <%= yield %>
+          <% if alert.present? %>
+            <p class="alert alert-danger text-center"><%= alert %></p>
+          <% end %>
+        </div>
     </div>
+  <%= yield %>
+</div>
+
   </body>
 
 </html>

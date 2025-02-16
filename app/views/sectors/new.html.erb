@@ -1,11 +1,13 @@
-<% content_for :title, "New sector" %>
+<% content_for :title, "Cadastrar Setor" %>
 
-<h1>New sector</h1>
+<div class="container d-flex justify-content-center mt-5">
+  <div class="col-md-10 col-lg-8 col-xl-7 p-5 border rounded shadow">
+    <h1 class="text-center mb-4">Cadastrar Setor</h1>
 
-<%= render "form", sector: @sector %>
+    <div class="text-center mb-4">
+      <%= link_to "Voltar para setores", sectors_path, class: "btn btn-secondary" %>
+    </div>
 
-<br>
-
-<div>
-  <%= link_to "Back to sectors", sectors_path %>
+    <%= render "form", sector: @sector %>
+  </div>
 </div>
