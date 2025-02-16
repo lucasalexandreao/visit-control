@@ -2,24 +2,12 @@
   <div class="card-body">
     <h5 class="card-title text-center">Detalhes da Visita</h5>
     <hr>
-    <p><strong>Horário de confirmação:</strong> <%= visit.confirmed_time.present? ? visit.confirmed_time.strftime("%d/%m/%Y %H:%M") : "Em espera" %></p>
     <p><strong>Visitante:</strong> <%= visit.visitor.name %></p>
     <p><strong>Unidade:</strong> <%= visit.unit.name %></p>
     <p><strong>Setor:</strong> <%= visit.sector.name %></p>
     <p><strong>Funcionário:</strong> <%= visit.employee.name %></p>
-
-    <div class="mt-4">
-      <!-- Link para Editar -->
-      <div class="d-flex justify-content-start">
-        <%= link_to "Editar", edit_visit_path(visit), class: "btn btn-primary btn-sm me-2" %>
-      </div>
-
-      <!-- Botão Excluir -->
-      <div class="d-flex justify-content-end">
-        <%= button_to "Excluir", visit, method: :delete, class: "btn btn-danger btn-sm" %>
-      </div>
-
-    </div>
+    <p><strong>Data e Hora da visita:</strong> <%= visit.created_at.strftime("%d/%m/%Y %H:%M") %></p>
+    <p><strong>Data e Hora da confirmação:</strong> <%= visit.confirmed_time.present? ? visit.confirmed_time.strftime("%d/%m/%Y %H:%M") : "Em espera" %></p>
   </div>
 </div>
 

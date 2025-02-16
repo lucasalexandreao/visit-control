@@ -4,7 +4,6 @@
       <%= form_with(model: visit, class: "needs-validation", novalidate: true) do |form| %>
         <% if visit.errors.any? %>
           <div class="alert alert-danger">
-            <h4 class="alert-heading"><%= pluralize(visit.errors.count, "erro") %> impediram esta visita de ser salva:</h4>
             <ul>
               <% visit.errors.each do |error| %>
                 <li><%= error.full_message %></li>
@@ -36,7 +35,6 @@
 
 
 <script>
-
 
 
   function fetchEmployeesEdit(sectorId) {

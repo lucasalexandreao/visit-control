@@ -1,8 +1,6 @@
-<%= form_with(model: visitor) do |form| %>
+<%= form_with(model: visitor, class: "needs-validation", novalidate: true) do |form| %>
   <% if visitor.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(visitor.errors.count, "error") %> prohibited this visitor from being saved:</h2>
-
+    <div class="alert alert-danger">
       <ul>
         <% visitor.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -11,47 +9,53 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :cpf, style: "display: block" %>
-    <%= form.text_field :cpf %>
+  <!-- Campo CPF -->
+  <div class="mb-3">
+    <%= form.label :cpf, "CPF", class: "form-label" %>
+    <%= form.text_field :cpf, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <!-- Campo Nome -->
+  <div class="mb-3">
+    <%= form.label :name, "Nome", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :rg, style: "display: block" %>
-    <%= form.text_field :rg %>
+  <!-- Campo RG -->
+  <div class="mb-3">
+    <%= form.label :rg, "RG", class: "form-label" %>
+    <%= form.text_field :rg, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :phone, style: "display: block" %>
-    <%= form.text_field :phone %>
+  <!-- Campo Telefone -->
+  <div class="mb-3">
+    <%= form.label :phone, "Telefone", class: "form-label" %>
+    <%= form.text_field :phone, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :photo %>
-    <%= form.file_field :photo, id: "foto-input" %> <!-- Campo de upload de arquivo -->
+  <!-- Campo Foto -->
+  <div class="mb-3">
+    <%= form.label :photo, "Foto", class: "form-label" %>
+    <%= form.file_field :photo, class: "form-control", id: "foto-input" %>
   </div>
 
   <!-- Captura de foto via webcam -->
-  <div class="field" data-controller="camera">
-    <button type="button" id="ativar-camera">Ativar Câmera</button>
-    <video id="webcam" autoplay style="display:none;"></video>
-    <button type="button" id="capturar-foto" style="display:none;">Capturar Foto</button>
-    <button type="button" id="desligar-camera" style="display:none;">Desligar Câmera</button>
-    <canvas id="canvas" style="display:none;"></canvas>
+  <div class="mb-3 text-center" data-controller="camera">
+    <button type="button" class="btn btn-primary" id="ativar-camera">Ativar Câmera</button>
+    <video id="webcam" autoplay style="display:none; max-width: 100%; height: auto;" class="mt-3"></video>
+    <button type="button" class="btn btn-warning mt-2" id="capturar-foto" style="display:none;">Capturar Foto</button>
+    <button type="button" class="btn btn-danger mt-2" id="desligar-camera" style="display:none;">Desligar Câmera</button>
+    <canvas id="canvas" style="display:none; max-width: 100%; height: auto;"></canvas>
   </div>
 
-  <div class="field">
-    <%= form.label :active, "Ativo" %>
-    <%= form.check_box :active %>
+  <!-- Campo Ativo -->
+  <div class="mb-3 form-check">
+    <%= form.check_box :active, class: "form-check-input" %>
+    <%= form.label :active, "Ativo", class: "form-check-label" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <!-- Botão de submit -->
+  <div class="d-grid">
+    <%= form.submit "Salvar", class: "btn btn-success" %>
   </div>
 <% end %>
-

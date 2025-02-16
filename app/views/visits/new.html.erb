@@ -1,23 +1,45 @@
 <% content_for :title, "New visit" %>
 
-<h1>Registrar visita</h1>
+<div class="container mt-4">
+  <h1 class="mb-4">Registrar visita</h1>
 
-<%= render "search" %>
+  <!-- Renderizando a barra de busca (presumo que seja um formulário ou input) -->
+    <div class="card-body">
+      <%= render "search" %>
+    </div>
 
-<% if @visit.errors.any? || @visitor.errors.any? %>
-  <!-- Se houver erros, mostra o formulário com os erros -->
-  <%= render "form", visit: @visit %>
-<% else %>
-  <% if @visitor.persisted? %>
-    <% if @visitor.active == false %>
-      <p>Este visitante está inativo. Por favor, ative-o antes de cadastrar uma visita.</p>
-      <%= link_to "Editar visitante", edit_visitor_path(@visitor)%>
-    <% else %>
-      <%= render "visitors/visitor_details" %>
-      <%= render "form", visit: @visit %>
+
+  <% if @visit.errors.any? || @visitor.errors.any? %>
+    <!-- Exibindo o formulário com erros, dentro de um card -->
+    <div class="card">
+      <div class="card-body">
+        <%= render "form", visit: @visit %>
+      </div>
+    </div>
+  <% else %>
+    <% if @visitor.persisted? %>
+      <% if @visitor.active == false %>
+        <div class="alert alert-warning mx-auto" role="alert" style="max-width: 600px; text-align: center;">
+          Este visitante está inativo. Por favor, ative-o antes de cadastrar uma visita.
+        </div>
+        <%= link_to "Editar visitante", edit_visitor_path(@visitor), class: "btn btn-secondary" %>
+      <% else %>
+          <div class="card-body">
+            <%= render "visitors/visitor_details" %>
+          </div>
+        <!-- Exibindo o formulário com sucesso -->
+        
+          <div class="card-body">
+            <%= render "form", visit: @visit %>
+          </div>
+      <% end %>
+    <% elsif params[:cpf].present? %>
+      <div class="alert alert-danger mx-auto" role="alert" style="max-width: 600px; text-align: center;">
+        Visitante não encontrado.
+      </div>
+        <div class="card-body">
+          <%= render "form", visit: @visit %>
+        </div>
     <% end %>
-  <% elsif params[:cpf].present? %>
-    <p>Visitante não encontrado.</p>
-    <%= render "form", visit: @visit %>
   <% end %>
-<% end %>
+</div>
