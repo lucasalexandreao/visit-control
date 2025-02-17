@@ -48,23 +48,39 @@ document.addEventListener("turbo:load", function() {
 
   function updateEmployees() {
     const sectorId = sectorSelect.value;
+    const selectedEmployeeId = employeeSelect.value; // Preserva o valor selecionado
+
     if (sectorId) {
       fetch(`/visits/employee_filter?sector_id=${sectorId}`)
         .then(response => response.json())
         .then(data => {
-          employeeSelect.innerHTML = "";
+          employeeSelect.innerHTML = ""; // Limpa as opções atuais
+
+          // Adiciona a opção padrão
+          const defaultOption = document.createElement('option');
+          defaultOption.value = "";
+          defaultOption.text = "Selecione um funcionário";
+          employeeSelect.appendChild(defaultOption);
+
+          // Adiciona as opções dos funcionários
           data.forEach(employee => {
             const option = document.createElement('option');
             option.value = employee.id;
             option.text = employee.name;
             employeeSelect.appendChild(option);
           });
+
+          // Restaura o valor selecionado, se ainda estiver na lista
+          if (selectedEmployeeId && data.some(employee => employee.id == selectedEmployeeId)) {
+            employeeSelect.value = selectedEmployeeId;
+          }
         })
         .catch(error => console.error("Erro na requisição:", error));
     } else {
       employeeSelect.innerHTML = '<option value="">Selecione um funcionário</option>';
     }
   }
+
   updateEmployees();
   sectorSelect.addEventListener("change", updateEmployees);
 });
