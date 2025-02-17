@@ -12,6 +12,11 @@
           </div>
         <% end %>
 
+      <div class="mb-3">
+        <%= form.label :visitor_id, "Visitante", class: "form-label" %>
+        <%= form.collection_select :visitor_id, @active_visitors || [], :id, :name, { prompt: "Selecione um visitante" }, { id: 'visitor_id', class: "form-select"} %>
+      </div>
+
         <%= form.hidden_field :confirmed_time %>
         <%= form.hidden_field :unit_id, value: current_user.unit_id %>
 

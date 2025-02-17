@@ -26,6 +26,7 @@ class VisitsController < ApplicationController
 
   # GET /visits/1/edit
   def edit
+    @active_visitors = Visitor.where(active: true).or(Visitor.where(id: @visit.visitor_id))
     @active_units = Unit.where(active: true).or(Unit.where(id: @visit.unit_id))
     @active_sectors = Sector.where(active: true, unit_id: current_user.unit_id).or(Sector.where(id: @visit.sector_id))
     @active_employees = Employee.where(active: true).or(Employee.where(id: @visit.employee_id))
@@ -57,10 +58,11 @@ class VisitsController < ApplicationController
   # PATCH/PUT /visits/1 or /visits/1.json
   def update
     respond_to do |format|
-      if @visit.update(visit_params)
+      if @visit.update(visit_params_for_edit)
         format.html { redirect_to @visit, notice: "Visit was successfully updated." }
         format.json { render :show, status: :ok, location: @visit }
       else
+        @active_visitors = Visitor.where(active: true).or(Visitor.where(id: @visit.visitor_id))
         @active_units = Unit.where(active: true).or(Unit.where(id: @visit.unit_id))
         @active_sectors = Sector.where(active: true, unit_id: current_user.unit_id).or(Sector.where(id: @visit.sector_id))
         @active_employees = Employee.where(active: true).or(Employee.where(id: @visit.employee_id))
@@ -121,5 +123,9 @@ class VisitsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def visit_params
       params.expect(visit: [ :confirmed_time, :unit_id, :sector_id, :employee_id, visitor_attributes: [ :cpf, :name, :rg, :phone, :photo ] ])
+    end
+
+    def visit_params_for_edit
+      params.expect(visit: [ :visitor_id, :confirmed_time, :unit_id, :sector_id, :employee_id ])
     end
 end

@@ -49,23 +49,23 @@
 
   
 <script>
- 
-  document.addEventListener("turbo:load", function() {
-    const role = document.querySelector("#user_role");
-    const unit = document.querySelector("#unit_field");
+function handleRoleVisibility() {
+  const role = document.querySelector("#user_role");
+  const unit = document.querySelector("#unit_field");
 
-    if (!role || !unit) return;
+  if (!role || !unit) return;
 
-    function showUnit() {
-      if (role.value === "attendant") {
-        unit.style.display = "block";
-      } else {
-        unit.style.display = "none";
-      }
-    }
-    
-    showUnit();
-    role.addEventListener("change", showUnit);
-  });
+  function showUnit() {
+    unit.style.display = role.value === "attendant" ? "block" : "none";
+  }
+
+  showUnit();
+  role.addEventListener("change", showUnit);
+}
+
+// Garante que a função seja chamada ao carregar e ao renderizar com Turbo
+document.addEventListener("turbo:load", handleRoleVisibility);
+document.addEventListener("turbo:render", handleRoleVisibility);
+
 
 </script>
