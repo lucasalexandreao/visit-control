@@ -1,16 +1,32 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "Unidades" %>
 
-<% content_for :title, "Units" %>
-
-<h1>Units</h1>
-<%= link_to "Cadastrar unidade", new_unit_path %>
-
-<div id="units">
-  <% @units.each do |unit| %>
-    <%= render unit %>
-    <p>
-      <%= link_to "Show this unit", unit %>
-    </p>
-  <% end %>
+<div class="d-flex my-3 justify-content-between align-items-center">
+  <h1 class="mb-0">Unidades</h1>
+  <%= link_to "Adicionar unidade", new_unit_path, class: "btn btn-dark fw-semibold d-flex" %>
 </div>
 
+<div class="border border-light-subtle p-3 rounded-4">
+  <table class="table table-striped table-hover mb-0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th class="text-end" style="transform: translateX(-1rem)">Ação</th>
+      </tr>
+    </thead>
+
+    <tbody align-middle ">
+      <% @units.each do |unit| %>
+        <tr>
+          <td style=" width: 100px"><%= unit.id %></td>
+          <td><%= unit.name %></td>
+          <td class="text-end" style="width: 120px; padding-right: 1.5rem;">
+            <%= link_to edit_unit_path(unit), class: "btn btn-sm btn-dark border", role: "button" do %>
+              <i class="fa fa-edit"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
