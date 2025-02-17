@@ -4,18 +4,22 @@ class Unit < ApplicationRecord
   before_update :deactivate_sectors_and_attendants_if_inactive, if: :inactive?
   validates :name, presence: true, length: 1..100
 
+  # Retorna se está inativo
   def inactive?
     !self.active
   end
 
+  # Desativa
   def deactivate!
     update(active: false)
   end
 
+  # Ativa
   def activate!
     update(active: true)
   end
 
+  # Desativa setores e apaga usuários de atendentes associados à unidade desativada
   def deactivate_sectors_and_attendants_if_inactive
     if self.sectors.present?
         ActiveRecord::Base.transaction do

@@ -1,17 +1,20 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :authorize_admin
   before_action :set_user, only: [ :edit, :update, :destroy ]
+  load_and_authorize_resource
 
   def index
     @users = User.all
   end
 
   def show
+    @user = User.find(params[:id])
   end
 
   def new
     @user = User.new
+
+    # Filtra unidades ativas
     @active_units = Unit.where(active: true)
   end
 
@@ -31,6 +34,7 @@ class UsersController < ApplicationController
   end
 
   def edit
+    # Filtra unidades ativas ou associadas ao usuário
     @active_units = Unit.where(active: true).or(Unit.where(id: @user.unit_id))
   end
 
@@ -53,10 +57,6 @@ class UsersController < ApplicationController
   end
 
   private
-
-  def authorize_admin
-    redirect_to root_path, alert: "Acesso negado." unless current_user.admin?
-  end
 
   def set_user
     @user = User.find(params[:id])

@@ -14,13 +14,14 @@ class EmployeesController < ApplicationController
   # GET /employees/new
   def new
     @employee = Employee.new
-    @employee.build_user(role: 2)
-    @active_sectors = Sector.where(active: true)
+
+    @employee.build_user(role: 2) # Cria um funcionário já com usuário do tipo funcionário
+    @active_sectors = Sector.where(active: true) # Filtra setores ativos
   end
 
   # GET /employees/1/edit
   def edit
-    @active_sectors = Sector.where(active: true).or(Sector.where(id: @employee.sector_id))
+    @active_sectors = Sector.where(active: true).or(Sector.where(id: @employee.sector_id)) # Filtra setores ativos ou associado ao funcionário
   end
 
   # POST /employees or /employees.json
@@ -33,10 +34,9 @@ class EmployeesController < ApplicationController
 
     @employee.user.role = 2  # Garante que o usuário é do tipo funcionário
 
-
     respond_to do |format|
       if @employee.save
-        format.html { redirect_to @employee, notice: "Employee was successfully created." }
+        format.html { redirect_to @employee, notice: "Funcionário cadastrado com sucesso." }
         format.json { render :show, status: :created, location: @employee }
       else
         @active_sectors = Sector.where(active: true)
@@ -50,7 +50,7 @@ class EmployeesController < ApplicationController
   def update
     respond_to do |format|
       if @employee.update(employee_params)
-        format.html { redirect_to @employee, notice: "Employee was successfully updated." }
+        format.html { redirect_to @employee, notice: "Funcionário atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @employee }
       else
         @active_sectors = Sector.where(active: true).or(Sector.where(id: @employee.sector_id))

@@ -8,19 +8,22 @@ class Sector < ApplicationRecord
   validates :name, presence: true, length: 1..100
   validates :unit_id, presence: true
 
-
+  # Retorna se está inativo
   def inactive?
     !self.active
   end
 
+  # Desativa
   def deactivate!
     update(active: false)
   end
 
+  # Ativa
   def activate!
     update(active: true)
   end
 
+  # Desativa os funcionários caso o setor seja desativado
   def deactivate_employees_if_inactive
     if self.employees.present?
       ActiveRecord::Base.transaction do
@@ -32,12 +35,14 @@ class Sector < ApplicationRecord
     end
   end
 
+  # Impede de ativar setor associado a uma unidade desativada
   def unit_must_be_active
     if unit && !unit.active
       errors.add(:base, "Não é possível ativar um setor cuja unidade está desativada.")
     end
   end
 
+  # Verifica se o setor foi ativado
   def activating_sector?
     active_changed? && active
   end

@@ -26,7 +26,7 @@ class VisitorsController < ApplicationController
 
     respond_to do |format|
       if @visitor.save
-        format.html { redirect_to @visitor, notice: "Visitor was successfully created." }
+        format.html { redirect_to @visitor, notice: "Visitante cadastrado com sucesso." }
         format.json { render :show, status: :created, location: @visitor }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +39,7 @@ class VisitorsController < ApplicationController
   def update
     respond_to do |format|
       if @visitor.update(visitor_params)
-        format.html { redirect_to @visitor, notice: "Visitor was successfully updated." }
+        format.html { redirect_to @visitor, notice: "Visitante atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @visitor }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,6 +58,7 @@ class VisitorsController < ApplicationController
     end
   end
 
+  # Procura visitante pelo CPF
   def search
     @visitor = Visitor.find_by(cpf: params[:cpf])
     render :index

@@ -29,7 +29,7 @@ class SectorsController < ApplicationController
 
     respond_to do |format|
       if @sector.save
-        format.html { redirect_to @sector, notice: "Sector was successfully created." }
+        format.html { redirect_to sectors_path, notice: "Setor cadastrado com sucesso." }
         format.json { render :show, status: :created, location: @sector }
       else
         @active_units = Unit.where(active: true)
@@ -44,7 +44,7 @@ class SectorsController < ApplicationController
   def update
     respond_to do |format|
       if @sector.update(sector_params)
-        format.html { redirect_to @sector, notice: "Sector was successfully updated." }
+        format.html { redirect_to sectors_path, notice: "Setor atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @sector }
       else
         @active_units = Unit.where(active: true).or(Unit.where(id: @sector.unit_id))

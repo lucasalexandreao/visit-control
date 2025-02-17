@@ -1,5 +1,4 @@
 function handleDeleteConfirmation() {
-    console.log("ta rodando");
     const deleteButtons = document.querySelectorAll('.delete-button');
 
     deleteButtons.forEach(function(button) {

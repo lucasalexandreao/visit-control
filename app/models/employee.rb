@@ -10,18 +10,21 @@ class Employee < ApplicationRecord
   validates :name, presence: true, length: 1..200
   validates :sector_id, presence: true
 
+  # Retorna se está inativo
   def inactive?
     !self.active
   end
 
+  # Desativa
   def deactivate!
     update(active: false)
   end
-
+  # Ativa
   def activate!
     update(active: true)
   end
 
+  # Remove usuário de um funcionário desativado
   def destroy_user_if_inactive
     if active_changed? && !active? && user.present?
       user_to_delete = user  # Salva o usuário antes de remover a referência
@@ -30,6 +33,7 @@ class Employee < ApplicationRecord
     end
   end
 
+  # Cria um usuário padrão quando reativa um funcionário
   def create_user_if_activated
     if active_changed? && active? && user.nil?
       generated_email = generate_email
@@ -38,6 +42,7 @@ class Employee < ApplicationRecord
     end
   end
 
+  # gera email padrão e evita duplicatas
   def generate_email
     base_email = name.downcase.gsub(/\s+/, "_")
     domain = "empresa.com"
@@ -45,12 +50,14 @@ class Employee < ApplicationRecord
     count > 0 ? "#{base_email}_#{count}@#{domain}" : "#{base_email}@#{domain}"
   end
 
+  # Impede de ativar um funcionário de um setor desativado
   def sector_must_be_active
     if sector && !sector.active
       errors.add(:base, "Não é possível ativar um funcionário cujo setor está desativado.")
     end
   end
 
+  # Verifica se o funcionário foi ativado
   def activating_employee?
     active_changed? && active
   end

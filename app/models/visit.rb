@@ -8,8 +8,9 @@ class Visit < ApplicationRecord
   validates :employee_id, presence: true
 
 
-  scope :not_confirmed, -> { where(confirmed_time: nil) }
+  scope :not_confirmed, -> { where(confirmed_time: nil) } # Visitas não confirmadas pelo funcionário
 
+  # Confirmar visita (notificar o sistema)
   def confirm!
     update(confirmed_time: Time.current)
   end

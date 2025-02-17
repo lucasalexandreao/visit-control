@@ -4,6 +4,7 @@ class VisitsController < ApplicationController
 
   # GET /visits or /visits.json
   def index
+    # Filtro para quais visitas o funcionário pode ver
     if current_user.employee?
       @visits = Visit.accessible_by(current_ability)
     else
@@ -19,6 +20,8 @@ class VisitsController < ApplicationController
   def new
     @visit = Visit.new
     @visitor = Visitor.new
+
+    # Filtra unidades, setores e funcionários ativos
     @active_units = Unit.where(active: true)
     @active_sectors = Sector.where(active: true, unit_id: current_user.unit_id)
     @active_employees = Employee.where(active: true)
@@ -26,6 +29,7 @@ class VisitsController < ApplicationController
 
   # GET /visits/1/edit
   def edit
+    # Filtra visitantes, unidades, setores e funcionários ativos
     @active_visitors = Visitor.where(active: true).or(Visitor.where(id: @visit.visitor_id))
     @active_units = Unit.where(active: true).or(Unit.where(id: @visit.unit_id))
     @active_sectors = Sector.where(active: true, unit_id: current_user.unit_id).or(Sector.where(id: @visit.sector_id))
@@ -34,7 +38,6 @@ class VisitsController < ApplicationController
 
   # POST /visits or /visits.json
   def create
-    # @visit = Visit.new(visit_params)
     @visitor = Visitor.find_by(cpf: visit_params[:visitor_attributes][:cpf])
     @visitor ||= Visitor.new(visit_params[:visitor_attributes]) # Cria um novo visitante se não existir
 
@@ -43,7 +46,7 @@ class VisitsController < ApplicationController
 
     respond_to do |format|
       if @visit.save
-        format.html { redirect_to @visit, notice: "Visit was successfully created." }
+        format.html { redirect_to @visit, notice: "Visita registrada com sucesso." }
         format.json { render :show, status: :created, location: @visit }
       else
         @active_units = Unit.where(active: true)
@@ -59,7 +62,7 @@ class VisitsController < ApplicationController
   def update
     respond_to do |format|
       if @visit.update(visit_params_for_edit)
-        format.html { redirect_to @visit, notice: "Visit was successfully updated." }
+        format.html { redirect_to @visit, notice: "Visita atualizada com sucesso." }
         format.json { render :show, status: :ok, location: @visit }
       else
         @active_visitors = Visitor.where(active: true).or(Visitor.where(id: @visit.visitor_id))
@@ -77,11 +80,12 @@ class VisitsController < ApplicationController
     @visit.destroy!
 
     respond_to do |format|
-      format.html { redirect_to visits_path, status: :see_other, notice: "Visit was successfully destroyed." }
+      format.html { redirect_to visits_path, status: :see_other, notice: "Visita excluída com sucesso." }
       format.json { head :no_content }
     end
   end
 
+  # Procura visitante pelo CPF
   def search
     @active_units = Unit.where(active: true)
     @active_sectors = Sector.where(active: true, unit_id: current_user.unit_id)
@@ -97,6 +101,7 @@ class VisitsController < ApplicationController
     render :new # Renderiza a view 'new' novamente com os resultados
   end
 
+  # Permite o funcionário notificar a ocorrência de visitas
   def confirm
     @visit = Visit.find(params[:id])
     authorize! :confirm, @visit # Verifica se o usuário pode confirmar a visita
@@ -104,6 +109,7 @@ class VisitsController < ApplicationController
     redirect_to visits_path, notice: "Visita confirmada com sucesso."
   end
 
+  # Filtra os funcionários de acordo com o setor selecionado no formulário
   def employee_filter
     if params[:sector_id].present?
       @employees = Employee.where(active: true, sector_id: params[:sector_id])
