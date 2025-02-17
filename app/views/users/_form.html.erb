@@ -33,7 +33,7 @@
 
       <div id="unit_field" class="mb-3" style="display: none;">
         <%= form.label :unit_id, "Unidade", class: "form-label" %>
-        <%= form.collection_select :unit_id, @active_units, :id, :name, prompt: "Selecione uma unidade", class: "form-select" %>
+        <%= form.collection_select :unit_id, @active_units || [], :id, :name, prompt: "Selecione uma unidade", class: "form-select" %>
       </div>
 
       <div class="d-grid">

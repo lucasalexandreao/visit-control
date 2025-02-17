@@ -10,6 +10,7 @@
     <p>
       <%= link_to "Show this user", user %>
       <%= link_to "Edit this user", edit_user_path(user) %>
+      <%= button_to "Destroy this user", user, method: :delete %>
     </p>
   <% end %>
 </div>

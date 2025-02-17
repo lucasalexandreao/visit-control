@@ -13,7 +13,7 @@
 
       <div class="mb-3">
         <%= form.label :cpf, "CPF", class: "form-label" %>
-        <%= form.text_field :cpf, class: "form-control" %>
+        <%= form.text_field :cpf, class: "form-control", id: "cpf", placeholder: "000.000.000-00" %>
       </div>
 
       <div class="mb-3">
@@ -23,12 +23,12 @@
 
       <div class="mb-3">
         <%= form.label :rg, "RG", class: "form-label" %>
-        <%= form.text_field :rg, class: "form-control" %>
+        <%= form.text_field :rg, class: "form-control", id: "rg", placeholder: "000.000.000" %>
       </div>
 
       <div class="mb-3">
         <%= form.label :phone, "Telefone", class: "form-label" %>
-        <%= form.text_field :phone, class: "form-control" %>
+        <%= form.text_field :phone, class: "form-control", id: "phone", placeholder: "(00) 9 0000-0000" %>
       </div>
 
       <div class="mb-3">

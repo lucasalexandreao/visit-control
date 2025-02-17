@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable
 
-  has_one :employee
+  has_one :employee, dependent: :nullify
   belongs_to :unit, optional: true
   validates :unit_id, presence: true, if: -> { attendant? }
   validates :email, presence: true, uniqueness: true

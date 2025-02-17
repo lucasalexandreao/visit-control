@@ -23,27 +23,27 @@
       <% else %>
         <%= form.fields_for :visitor, @visitor do |visitor_fields| %>
           <div class="mb-3">
-            <%= visitor_fields.label :cpf, class: "form-label" %>
-            <%= visitor_fields.text_field :cpf, class: "form-control" %>
+            <%= visitor_fields.label :cpf, "CPF", class: "form-label" %>
+            <%= visitor_fields.text_field :cpf, class: "form-control", id: "cpf", placeholder: "000.000.000-00" %>
           </div>
 
           <div class="mb-3">
-            <%= visitor_fields.label :name, class: "form-label" %>
+            <%= visitor_fields.label :name, "Nome", class: "form-label" %>
             <%= visitor_fields.text_field :name, class: "form-control" %>
           </div>
 
           <div class="mb-3">
-            <%= visitor_fields.label :rg, class: "form-label" %>
-            <%= visitor_fields.text_field :rg, class: "form-control" %>
+            <%= visitor_fields.label :rg, "RG", class: "form-label" %>
+            <%= visitor_fields.text_field :rg, class: "form-control", id: "rg", placeholder: "000.000.000" %>
           </div>
 
           <div class="mb-3">
-            <%= visitor_fields.label :phone, class: "form-label" %>
-            <%= visitor_fields.text_field :phone, class: "form-control" %>
+            <%= visitor_fields.label :phone, "Telefone", class: "form-label"%>
+            <%= visitor_fields.text_field :phone, class: "form-control", id: "phone", placeholder: "(00) 9 0000-0000" %>
           </div>
 
           <div class="mb-3">
-            <%= visitor_fields.label :photo, class: "form-label" %>
+            <%= visitor_fields.label :photo, "Foto", class: "form-label" %>
             <%= visitor_fields.file_field :photo, class: "form-control", id: "foto-input" %>
           </div>
 
@@ -62,12 +62,12 @@
       <%= form.hidden_field :unit_id, value: current_user.unit_id %>
 
       <div class="mb-3">
-        <%= form.label :sector_id, class: "form-label" %>
+        <%= form.label :sector_id, "Setor", class: "form-label" %>
         <%= form.collection_select :sector_id, @active_sectors || [], :id, :name, { prompt: "Selecione um setor" }, { id: 'sector_id', class: "form-select", onchange: "fetchEmployees(this.value)" } %>
       </div>
 
       <div class="mb-3">
-        <%= form.label :employee_id, class: "form-label" %>
+        <%= form.label :employee_id, "Funcionário", class: "form-label" %>
         <%= form.collection_select :employee_id, @active_employees || [], :id, :name, { prompt: "Selecione um funcionário" }, { id: 'employee_id', class: "form-select" } %>
       </div>
 
@@ -81,8 +81,8 @@
 
 
 <script>
-  function fetchEmployees(sectorId) {
-  const employeeSelect = document.getElementById('employee_id');
+function fetchEmployees(sectorId) {
+  const employeeSelect = document.querySelector("#employee_id");
   if (sectorId) {
     // Faz uma requisição AJAX para buscar os funcionários do setor selecionado
     fetch(`/visits/employee_filter?sector_id=${sectorId}`)
