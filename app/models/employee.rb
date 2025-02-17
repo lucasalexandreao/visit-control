@@ -44,10 +44,10 @@ class Employee < ApplicationRecord
 
   # gera email padrão e evita duplicatas
   def generate_email
-    base_email = name.downcase.gsub(/\s+/, "_")
+    base_email = "tempemail"
     domain = "empresa.com"
     count = User.where("email LIKE ?", "#{base_email}%").count
-    count > 0 ? "#{base_email}_#{count}@#{domain}" : "#{base_email}@#{domain}"
+    count > 0 ? "#{base_email}#{count}@#{domain}" : "#{base_email}@#{domain}"
   end
 
   # Impede de ativar um funcionário de um setor desativado
