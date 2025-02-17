@@ -82,28 +82,28 @@ sector_b2 = Sector.create!(
 
 employee1 = Employee.create!(
   cpf: "111.111.111-11",
-  name: "Funcionário A1",
+  name: "Funcionario A1",
   sector: sector_a1,
   user: employee_user1
 )
 
 employee2 = Employee.create!(
   cpf: "111.111.111-12",
-  name: "Funcionário A2",
+  name: "Funcionario A2",
   sector: sector_a2,
   user: employee_user2
 )
 
 employee3 = Employee.create!(
   cpf: "111.111.111-13",
-  name: "Funcionário B1",
+  name: "Funcionario B1",
   sector: sector_b1,
   user: employee_user3
 )
 
 employee4 = Employee.create!(
   cpf: "111.111.111-14",
-  name: "Funcionário B2",
+  name: "Funcionario B2",
   sector: sector_b2,
   user: employee_user4
 )
