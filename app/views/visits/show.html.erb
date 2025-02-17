@@ -4,13 +4,22 @@
       <%= render @visit %>
 
       <div class="mt-4 d-flex justify-content-center gap-2">
-        <%= link_to "Editar", edit_visit_path(@visit), class: "btn btn-primary" %>
-        <%= button_to "Excluir", @visit, method: :delete, class: "btn btn-danger", data: { confirm: "Tem certeza que deseja excluir esta visita?" } %>
+        <% if can?(:edit, @visit) %>
+          <%= link_to "Editar", edit_visit_path(@visit), class: "btn btn-primary" %>
+        <% end %>
+        <% if can?(:destroy, @visit) %>
+          <%= button_to "Excluir", @visit, method: :delete, class: "btn btn-danger", data: { confirm: "Tem certeza que deseja excluir esta visita?" } %>
+        <% end %>
+        <% if can?(:confirm, @visit) %>
+          <%= button_to "Confirmar", confirm_visit_path(@visit), method: :post, class: "btn btn-success" %>
+        <% end %>
       </div>
 
       <div class="mt-4 text-center">
         <%= link_to "Voltar para visitas", visits_path, class: "btn btn-secondary" %>
       </div>
+
+      
     </div>
   </div>
 </div>

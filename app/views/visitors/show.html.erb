@@ -4,7 +4,9 @@
       <%= render @visitor %> 
 
       <div class="mt-4 text-center">
-        <%= link_to "Editar este visitante", edit_visitor_path(@visitor), class: "btn btn-primary me-2" %>
+        <% if can?(:edit, @visitor) %>
+          <%= link_to "Editar este visitante", edit_visitor_path(@visitor), class: "btn btn-primary me-2" %>
+        <% end %>
         <%= link_to "Voltar para visitantes", visitors_path, class: "btn btn-secondary" %>
       </div>
     </div>

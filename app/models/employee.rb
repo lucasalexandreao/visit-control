@@ -6,6 +6,9 @@ class Employee < ApplicationRecord
   before_update :destroy_user_if_inactive
   before_save :create_user_if_activated
   validate :sector_must_be_active, if: :activating_employee?
+  validates :cpf, presence: true, uniqueness: true, length: { is: 14 }
+  validates :name, presence: true, length: 1..200
+  validates :sector_id, presence: true
 
   def inactive?
     !self.active

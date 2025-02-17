@@ -5,6 +5,9 @@ class Sector < ApplicationRecord
   has_many :employees, dependent: :destroy
   before_update :deactivate_employees_if_inactive, if: :inactive?
   validate :unit_must_be_active, if: :activating_sector?
+  validates :name, presence: true, length: 1..100
+  validates :unit_id, presence: true
+
 
   def inactive?
     !self.active

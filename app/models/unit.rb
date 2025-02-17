@@ -1,8 +1,8 @@
 class Unit < ApplicationRecord
   has_many :sectors, dependent: :destroy
   has_many :users, dependent: :destroy
-  validates :name, presence: true
   before_update :deactivate_sectors_and_attendants_if_inactive, if: :inactive?
+  validates :name, presence: true, length: 1..100
 
   def inactive?
     !self.active

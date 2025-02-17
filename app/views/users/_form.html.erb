@@ -1,6 +1,6 @@
 <div class="container d-flex justify-content-center mt-5">
   <div class="col-md-8 col-lg-6 col-xl-5 p-4 border rounded shadow">
-    <%= form_with(model: @user, local: true) do |form| %>
+    <%= form_with(model: user, class: "needs-validation", novalidate: true) do |form| %>
       <% if user.errors.any? %>
         <div class="alert alert-danger">
           <ul>
@@ -10,7 +10,7 @@
           </ul>
         </div>
       <% end %>
-
+      
       <div class="mb-3">
         <%= form.label :email, "Email", class: "form-label" %>
         <%= form.email_field :email, class: "form-control" %>
@@ -26,10 +26,14 @@
         <%= form.password_field :password_confirmation, class: "form-control" %>
       </div>
 
-      <div class="mb-3">
-        <%= form.label :role, "Papel", class: "form-label" %>
-        <%= form.select :role, User.roles.keys.select { |role| %w[admin attendant].include?(role) }.map { |role| [role.humanize, role] }, prompt: "Selecione um papel", class: "form-select" %>
-      </div>
+      <% if @user.role == "employee" %>
+        <%= form.hidden_field :role %>
+      <% else %>
+        <div class="mb-3">
+          <%= form.label :role, "Papel", class: "form-label" %>
+          <%= form.select :role, User.roles.keys.select { |role| %w[admin attendant].include?(role) }.map { |role| [role.humanize, role] }, prompt: "Selecione um papel", class: "form-select" %>
+        </div>
+      <% end %>
 
       <div id="unit_field" class="mb-3" style="display: none;">
         <%= form.label :unit_id, "Unidade", class: "form-label" %>

@@ -1,51 +1,29 @@
+function applyMask(selector, maxLength, maskPattern) {
+    document.querySelectorAll(selector).forEach((input) => {
+        input.addEventListener("input", function(event) {
+            let value = event.target.value.replace(/\D/g, ""); // Remove tudo que não for número
 
-document.addEventListener('turbo:load', function() {
-    document.querySelector('#cpf').addEventListener('input', function(event) {
-        var input = event.target;
-        var value = input.value.replace(/\D/g, ''); // Remove caracteres não númericos
+            // Limita o número de dígitos
+            if (value.length > maxLength) {
+                value = value.substring(0, maxLength);
+            }
 
-        // Limita o número de dígitos a 11
-        if (value.length > 11) {
-            value = value.substring(0, 11);
-        }
+            // Aplica a máscara usando regex
+            value = value.replace(maskPattern.regex, maskPattern.format);
 
-        //Aplica a formatação de CPF após o usuário colocar os 11 digitos: xxx.xxx.xxx-xx
-        value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-        
-        //Atualiza o campo do formulário com a formatação
-        input.value = value;
+            event.target.value = value; // Atualiza o input com a máscara
+        });
     });
-    document.querySelector('#rg').addEventListener('input', function(event) {
-        var input = event.target;
-        var value = input.value.replace(/\D/g, ''); //Remove caracteres não númericos
+}
 
-        //Limita o número de dígitos a 9
-        if (value.length > 9) {
-            value = value.substring(0, 9);
-        }
+function setupFormMasks() {
+    applyMask("#cpf", 11, { regex: /(\d{3})(\d{3})(\d{3})(\d{2})/, format: "$1.$2.$3-$4" });
+    applyMask("#rg", 9, { regex: /(\d{3})(\d{3})(\d{3})/, format: "$1.$2.$3" });
+    applyMask("#phone", 11, { regex: /(\d{2})(\d{1})(\d{4})(\d{4})/, format: "($1) $2 $3-$4" });
+}
 
-        //Aplica a formatação de RG: xxx.xxx.xxx
-        value = value.replace(/(\d{3})(\d{3})(\d{3})/, '$1.$2.$3');
-        
-        //Atualiza o campo do formulário com a formatação
-        input.value = value;
-    });
-    document.querySelector('#phone').addEventListener('input', function(event) {
-        var input = event.target;
-        var value = input.value.replace(/\D/g, ''); //Remove caracteres não númericos
+// Aplica máscaras ao carregar a página
+document.addEventListener("turbo:load", setupFormMasks);
 
-        //Limita o número de dígitos a 11
-        if (value.length > 11) {
-            value = value.substring(0, 11);
-        }
-
-        //Aplica a formatação de Celular: (xx) x xxxx-xxxx
-        value = value.replace(/(\d{2})(\d{1})(\d{4})(\d{4})/, '($1) $2 $3-$4');
-        
-        //Atualiza o campo do formulário com a formatação
-        input.value = value;
-    });
-
-});
-
-
+// Aplica máscaras após o Turbo re-renderizar a página (após erro no formulário)
+document.addEventListener("turbo:render", setupFormMasks);
