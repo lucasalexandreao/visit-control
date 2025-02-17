@@ -1,7 +1,6 @@
 
 document.addEventListener('turbo:load', function() {
     document.querySelector('#cpf').addEventListener('input', function(event) {
-        console.log("TO AQUI CPF");
         var input = event.target;
         var value = input.value.replace(/\D/g, ''); // Remove caracteres não númericos
 
@@ -17,7 +16,6 @@ document.addEventListener('turbo:load', function() {
         input.value = value;
     });
     document.querySelector('#rg').addEventListener('input', function(event) {
-        console.log("TO AQUI RG");
         var input = event.target;
         var value = input.value.replace(/\D/g, ''); //Remove caracteres não númericos
 

@@ -17,12 +17,12 @@
 
       <div class="mb-3">
         <%= form.label :sector_id, "Setor", class: "form-label" %>
-        <%= form.collection_select :sector_id, @active_sectors || [], :id, :name, { prompt: "Selecione um setor" }, { id: 'sector_id', class: "form-select"} %>
+        <%= form.collection_select :sector_id, @active_sectors || [], :id, :name, { prompt: "Selecione um setor" }, { id: 'esector_id', class: "form-select"} %>
       </div>
 
       <div class="mb-3">
         <%= form.label :employee_id, "Funcionário", class: "form-label" %>
-        <%= form.collection_select :employee_id, @active_employees || [], :id, :name, { prompt: "Selecione um funcionário" }, { id: 'employee_id', class: "form-select" } %>
+        <%= form.collection_select :employee_id, @active_employees || [], :id, :name, { prompt: "Selecione um funcionário" }, { id: 'eemployee_id', class: "form-select" } %>
       </div>
 
         <div class="d-grid">
@@ -35,30 +35,33 @@
 
 
 <script>
-
 document.addEventListener("turbo:load", function() {
-  const sectorId = document.querySelector("#sector_id").value;
-  const employeeSelect = document.querySelector("#employee_id");
-  if (sectorId) {
-    // Faz uma requisição AJAX para buscar os funcionários do setor selecionado
-    fetch(`/visits/employee_filter?sector_id=${sectorId}`)
-      .then(response => response.json())
-      .then(data => {
-        // Limpa as opções atuais do campo de funcionário
-        employeeSelect.innerHTML = '<option value="">Selecione um funcionário</option>';
+  const sectorSelect = document.querySelector("#esector_id");
+  const employeeSelect = document.querySelector("#eemployee_id");
 
-        // Adiciona as novas opções ao campo de funcionário
-        data.forEach(employee => {
-          const option = document.createElement('option');
-          option.value = employee.id;
-          option.text = employee.name;
-          employeeSelect.appendChild(option);
-        });
-      });
-  } else {
-    // Se nenhum setor for selecionado, limpa o campo de funcionário
-    employeeSelect.innerHTML = '<option value="">Selecione um funcionário</option>';
+  if (!sectorSelect || !employeeSelect) return;
+
+  function updateEmployees() {
+    const sectorId = sectorSelect.value;
+    if (sectorId) {
+      fetch(`/visits/employee_filter?sector_id=${sectorId}`)
+        .then(response => response.json())
+        .then(data => {
+          employeeSelect.innerHTML = "";
+          data.forEach(employee => {
+            const option = document.createElement('option');
+            option.value = employee.id;
+            option.text = employee.name;
+            employeeSelect.appendChild(option);
+          });
+        })
+        .catch(error => console.error("Erro na requisição:", error));
+    } else {
+      employeeSelect.innerHTML = '<option value="">Selecione um funcionário</option>';
+    }
   }
+  updateEmployees();
+  sectorSelect.addEventListener("change", updateEmployees);
 });
 
 </script>

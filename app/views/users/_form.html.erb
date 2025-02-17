@@ -50,13 +50,18 @@
     const role = document.querySelector("#user_role");
     const unit = document.querySelector("#unit_field");
 
-    role.addEventListener("change", function() {
-      if (this.value === "attendant") {
+    if (!role || !unit) return;
+
+    function showUnit() {
+      if (role.value === "attendant") {
         unit.style.display = "block";
       } else {
         unit.style.display = "none";
       }
-    });
+    }
+    
+    showUnit();
+    role.addEventListener("change", showUnit);
   });
 
 </script>
