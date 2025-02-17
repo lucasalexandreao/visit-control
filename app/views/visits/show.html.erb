@@ -8,7 +8,7 @@
           <%= link_to "Editar", edit_visit_path(@visit), class: "btn btn-primary" %>
         <% end %>
         <% if can?(:destroy, @visit) %>
-          <%= button_to "Excluir", @visit, method: :delete, class: "btn btn-danger", data: { confirm: "Tem certeza que deseja excluir esta visita?" } %>
+          <%= button_to "Excluir", @visit, method: :delete, class: "btn btn-danger delete-button", data: { confirm: "Tem certeza que deseja excluir esta visita?" } %>
         <% end %>
         <% if can?(:confirm, @visit) %>
           <%= button_to "Confirmar", confirm_visit_path(@visit), method: :post, class: "btn btn-success" %>

@@ -21,6 +21,7 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" %>
+    <%= javascript_include_tag 'delete_button.js', crossorigin: 'anonymous' %>
     <%= javascript_include_tag 'search_validation.js', crossorigin: 'anonymous' %>
     <%= javascript_include_tag 'form_validations.js', crossorigin: 'anonymous' %>
     <%= javascript_importmap_tags %>
@@ -38,32 +39,32 @@
           <ul class="navbar-nav me-auto">
             <%if can?(:read, Visit)%>
               <li class="nav-item">
-                <%= link_to "Visitas", visits_path, class: "nav-link #{"active" if current_page?(visits_path)}" %>
+                <%= link_to "Visitas", visits_path, class: "nav-link #{"active" if controller_name == "visits"}" %>
               </li>
             <% end %>
             <%if can?(:read, Visitor)%>
               <li class="nav-item">
-                <%= link_to "Visitantes", visitors_path, class: "nav-link #{"active" if current_page?(visitors_path)}" %>
+                <%= link_to "Visitantes", visitors_path, class: "nav-link #{"active" if controller_name == "visitors"}" %>
               </li>
             <% end %>
             <%if can?(:read, Unit)%>
               <li class="nav-item">
-                <%= link_to "Unidades", units_path, class: "nav-link #{"active" if current_page?(units_path)}" %>
+                <%= link_to "Unidades", units_path, class: "nav-link #{"active" if controller_name == "units"}" %>
               </li>
             <% end %>
             <%if can?(:read, Sector)%>
               <li class="nav-item">
-                <%= link_to "Setores", sectors_path, class: "nav-link #{"active" if current_page?(sectors_path)}" %>
+                <%= link_to "Setores", sectors_path, class: "nav-link #{"active" if controller_name == "sectors"}" %>
               </li>
             <% end %>
             <%if can?(:read, Employee)%>
               <li class="nav-item">
-                <%= link_to "Funcionários", employees_path, class: "nav-link #{"active" if current_page?(employees_path)}" %>
+                <%= link_to "Funcionários", employees_path, class: "nav-link #{"active" if controller_name == "employees"}" %>
               </li>
             <% end %>
             <%if can?(:read, User)%>
               <li class="nav-item">
-                <%= link_to "Usuários", users_path, class: "nav-link #{"active" if current_page?(users_path)}" %>
+                <%= link_to "Usuários", users_path, class: "nav-link #{"active" if controller_name == "users"}" %>
               </li>
             <% end %>
           </ul>

@@ -22,10 +22,17 @@
           <td style="width: 100px;"><%= user.id %></td>
           <td><%= user.email %></td>
           <td><%= user.role %></td>
-          <td class="text-end" style="width: 120px; padding-right: 1.5rem;">
-            <%= link_to edit_user_path(user), class: "btn btn-sm btn-dark border", role: "button" do %>
-              <i class="fa fa-edit"></i>
-            <% end %>
+          <td class="text-end">
+            <div class="d-inline-flex gap-2">
+              <%= link_to edit_user_path(user), class: "btn btn-sm btn-dark border", role: "button" do %>
+                <i class="fa fa-edit"></i>
+              <% end %>
+              <% if can?(:destroy, user) %>
+                <%= button_to user_path(user), method: :delete, data: { confirm: "Tem certeza que deseja excluir este usuário?" }, class: "btn btn-sm btn-danger border delete-button" do %>
+                  <i class="fa fa-trash"></i>
+                <% end %>
+              <% end %>
+            </div>
           </td>
         </tr>
       <% end %>

@@ -15,6 +15,7 @@
         <th>Unidade</th>
         <th>Setor</th>
         <th>Usuário</th>
+        <th>Ativo</th>
         <th class="text-end" style="transform: translateX(-1rem);">Ação</th>
       </tr>
     </thead>
@@ -28,6 +29,9 @@
           <td><%= employee.sector.unit.name %></td>
           <td><%= employee.sector.name %></td>
           <td><%= employee.user&.email || "Usuário não cadastrado" %></td>
+          <td>
+            <i class="fa <%= employee.active? ? 'fa-check-circle text-success' : 'fa-times-circle text-danger' %>" style="transform: translateX(0.6rem)"></i>
+          </td>
           <td class="text-end" style="width: 120px;">
             <%= link_to employee, class: "btn btn-sm btn-light border", role: "button" do %>
               <i class="fa fa-eye"></i>

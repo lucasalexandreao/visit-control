@@ -11,6 +11,7 @@
       <tr>
         <th>ID</th>
         <th>Nome</th>
+        <th>Ativo</th>
         <th class="text-end" style="transform: translateX(-1rem)">Ação</th>
       </tr>
     </thead>
@@ -20,6 +21,9 @@
         <tr>
           <td style=" width: 100px"><%= unit.id %></td>
           <td><%= unit.name %></td>
+          <td>
+            <i class="fa <%= unit.active? ? 'fa-check-circle text-success' : 'fa-times-circle text-danger' %>" style="transform: translateX(0.6rem)"></i>
+          </td>
           <td class="text-end" style="width: 120px; padding-right: 1.5rem;">
             <%= link_to edit_unit_path(unit), class: "btn btn-sm btn-dark border", role: "button" do %>
               <i class="fa fa-edit"></i>

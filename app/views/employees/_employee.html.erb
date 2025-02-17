@@ -9,6 +9,7 @@
         <p><strong>Unidade:</strong> <%= employee.sector.unit.name %></p>
         <p><strong>Setor:</strong> <%= employee.sector.name %></p>
         <p><strong>Usuário:</strong> <%= employee.user&.email || "Usuário não cadastrado" %></p>
+        <p><strong>Ativo:</strong> <i class="fa <%= employee.active? ? 'fa-check-circle text-success' : 'fa-times-circle text-danger' %>" style="transform: translateX(0.6rem)"></i></p>
       </div>
     </div>
   </div>

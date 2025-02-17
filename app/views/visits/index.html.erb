@@ -39,7 +39,7 @@
                   <span class="badge bg-warning text-dark p-2">Em espera</span>
                 <% end %>
               </td>
-              <td>
+              <td class="d-flex justify-content-center align-items-center gap-2">
                 <%= link_to visit, class: "btn btn-sm btn-light border", role: "button" do %>
                   <i class="fa fa-eye"></i>
                 <% end %>
@@ -49,8 +49,13 @@
                   <% end %>
                 <% end %>
                 <% if can?(:destroy, visit) %>
-                  <%= link_to @visit, method: :delete, data: { confirm: "Tem certeza que deseja excluir esta visita?" }, class: "btn btn-sm btn-danger border", role: "button" do %>
+                  <%= button_to visit_path(visit), method: :delete, data: { confirm: "Tem certeza que deseja excluir esta visita?" }, class: "btn btn-sm btn-danger border delete-button" do %>
                     <i class="fa fa-trash"></i>
+                  <% end %>
+                <% end %>
+                <% if can?(:confirm, visit) %>
+                  <%= button_to confirm_visit_path(visit), method: :post, class: "btn btn-sm btn-success border", role: "button" do %>
+                    <i class="fa fa-check"></i>
                   <% end %>
                 <% end %>
               </td>

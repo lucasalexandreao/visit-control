@@ -14,6 +14,7 @@
       <p><strong>CPF:</strong> <%= visitor.cpf %></p>
       <p><strong>RG:</strong> <%= visitor.rg %></p>
       <p><strong>Telefone:</strong> <%= visitor.phone %></p>
+      <p><strong>Ativo:</strong> <i class="fa <%= visitor.active? ? 'fa-check-circle text-success' : 'fa-times-circle text-danger' %>" style="transform: translateX(0.6rem)"></i></p>
     </div>
   </div>
 </div>
