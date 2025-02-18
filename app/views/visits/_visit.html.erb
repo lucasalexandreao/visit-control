@@ -1,13 +1,40 @@
-<div id="<%= dom_id visit %>" class="card shadow-sm mb-3 mx-auto" style="max-width: 600px;">
+<div id="<%= dom_id visit %>" class="card p-2 border border-opacity-10 rounded-5 shadow-sm mb-4 mx-auto" style="max-width: 600px;">
   <div class="card-body">
-    <h5 class="card-title text-center">Detalhes da Visita</h5>
-    <hr>
-    <p><strong>Visitante:</strong> <%= visit.visitor.name %></p>
-    <p><strong>Unidade:</strong> <%= visit.unit.name %></p>
-    <p><strong>Setor:</strong> <%= visit.sector.name %></p>
-    <p><strong>Funcionário:</strong> <%= visit.employee.name %></p>
-    <p><strong>Data e Hora da visita:</strong> <%= visit.created_at.strftime("%d/%m/%Y %H:%M") %></p>
-    <p><strong>Data e Hora da confirmação:</strong> <%= visit.confirmed_time.present? ? visit.confirmed_time.strftime("%d/%m/%Y %H:%M") : "Em espera" %></p>
+    <div class="d-flex justify-content-center mb-3">
+      <h5 class="border border-b-1 border-opacity-10 shadow-sm rounded-5 p-3 w-50 card-title text-center">Detalhes da Visita</h5>
+    </div>
+
+    <div class="d-flex flex-row fw-semibold fs-4">
+      <p>Visitante: </p>
+      <p class="fw-light flex-fill text-end fs-5 text-capitalize"><%= visit.visitor.name %></p>
+    </div>
+    
+    <div class="d-flex flex-row fw-semibold fs-5">
+      <p>Unidade:</p> 
+      <p class="fw-light flex-fill text-end text-capitalize"><%= visit.unit.name %></p>
+    </div>
+
+    <div class="d-flex flex-row fw-semibold fs-5">
+      <p>Setor: </p>
+      <p class="fw-light flex-fill text-end text-capitalize"><%= visit.sector.name %></p>
+    </div>
+
+    <div class="d-flex flex-row fw-semibold fs-5">
+      <p>Funcionário: </p>
+      <p class="fw-light flex-fill text-end text-capitalize"><%= visit.employee.name %></p>
+    </div>
+
+    <hr></hr>
+
+    <div class="d-flex flex-column fw-semibold text-center fs-5">
+      <p>Data de Visita</p> 
+      <p class="fw-light flex-fill text-capitalize"><%= visit.created_at.strftime("%d/%m/%Y - %H:%M") %></p>
+    </div>
+
+    <div class="d-flex flex-column fw-semibold text-center fs-5">
+      <p>Data de Confirmação </p>
+      <p class="fw-light flex-fill text-capitalize"><%= visit.confirmed_time.present? ? visit.confirmed_time.strftime("%d/%m/%Y - %H:%M") : "Em espera" %></p>
+    </div>
   </div>
 </div>
 

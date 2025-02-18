@@ -1,23 +1,27 @@
 <div class="container d-flex justify-content-center mt-5">
-  <div class="card p-4" style="max-width: 600px; width: 100%; position: relative;">
+  <div class="card pb-1 px-1 pt-1 border border-opacity-10 shadow-sm rounded-5" style="max-width: 650px; width: 100%; position: relative;">
     <div class="card-body">
       <%= render @visit %>
 
-      <div class="mt-4 d-flex justify-content-center gap-2">
-        <% if can?(:edit, @visit) %>
-          <%= link_to "Editar", edit_visit_path(@visit), class: "btn btn-primary" %>
-        <% end %>
-        <% if can?(:destroy, @visit) %>
-          <%= button_to "Excluir", @visit, method: :delete, class: "btn btn-danger delete-button", data: { confirm: "Tem certeza que deseja excluir esta visita?" } %>
-        <% end %>
-        <% if can?(:confirm, @visit) %>
-          <%= button_to "Confirmar", confirm_visit_path(@visit), method: :post, class: "btn btn-success" %>
-        <% end %>
+      <div class="d-flex flex-column">
+        <div class="d-flex justify-content-center">
+          <% if can?(:confirm, @visit) %>
+            <%= button_to "Confirmar", confirm_visit_path(@visit), method: :post, class: "px-5 btn btn-success fs-5" %>
+          <% end %>
+        </div>
+        <div class="d-flex flex-row justify-content-center gap-5">
+          <% if can?(:edit, @visit) %>
+            <%= link_to "Editar", edit_visit_path(@visit), class: "px-5 border border-dark border-opacity-10 btn btn-light fs-5" %>
+          <% end %>
+          <% if can?(:destroy, @visit) %>
+            <%= button_to "Excluir", @visit, method: :delete, class: "px-5 border border-dark border-opacity-10 btn btn-danger delete-button fs-5", data: { confirm: "Tem certeza que deseja excluir esta visita?" } %>
+          <% end %>
+        </div>
+        <div class="mt-4 text-center">
+          <%= link_to "Voltar", visits_path, class: "w-25 border border-light border-opacity-10 btn btn-dark fs-5" %>
+        </div>
       </div>
 
-      <div class="mt-4 text-center">
-        <%= link_to "Voltar para visitas", visits_path, class: "btn btn-secondary" %>
-      </div>
 
     </div>
   </div>

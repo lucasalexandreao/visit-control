@@ -13,7 +13,7 @@
 
   <% if @visit.errors.any? || @visitor.errors.any? %>
     <!-- Exibindo o formulário com erros, dentro de um card -->
-    <div class="card">
+    <div class="card border border-0">
       <div class="card-body">
         <%= render "form", visit: @visit %>
       </div>
@@ -21,17 +21,19 @@
   <% else %>
     <% if @visitor.persisted? %>
       <% if @visitor.active == false %>
-        <div class="alert alert-warning mx-auto" role="alert" style="max-width: 600px; text-align: center;">
-          Este visitante está inativo. Por favor, ative-o antes de cadastrar uma visita.
+        <div class="d-flex flex-column align-items-center">
+          <div class="alert alert-warning mx-auto mt-3" role="alert" style="max-width: 600px; text-align: center;">
+            Este visitante está inativo. Por favor, ative-o antes de cadastrar uma visita.
+          </div>
+          <%= link_to "Editar visitante", edit_visitor_path(@visitor), class: "w-25 px-5 border border-dark border-opacity-10 btn btn-light fs-5" %>
         </div>
-        <%= link_to "Editar visitante", edit_visitor_path(@visitor), class: "btn btn-secondary" %>
       <% else %>
           <div class="card-body">
             <%= render "visitors/visitor_details" %>
           </div>
         <!-- Exibindo o formulário com sucesso -->
         
-          <div class="card-body">
+          <div class="card-body mb-5">
             <%= render "form", visit: @visit %>
           </div>
       <% end %>
@@ -39,9 +41,9 @@
       <div class="alert alert-danger mx-auto" role="alert" style="max-width: 600px; text-align: center;">
         Visitante não encontrado.
       </div>
-        <div class="card-body">
-          <%= render "form", visit: @visit %>
-        </div>
+      <div class="card-body">
+        <%= render "form", visit: @visit %>
+      </div>
     <% end %>
   <% end %>
 </div>
