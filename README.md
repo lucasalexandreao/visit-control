@@ -4,6 +4,9 @@
 - **Rails** 8.0.1
 - **Ruby** 3.3.7
 - **PostgreSQL** 17
+- **Devise** para autenticação
+- **CanCanCan** para autorização
+- **CarrierWave** para upload de foto
 
 ## Preparo da aplicação:
 1. Clone este repositório ou faça o download dos arquivos.
@@ -65,3 +68,9 @@ De acordo com os requisitos do sistema, foram planejadas e escolhidas algumas l�
 - Caso **não exista**, é possível cadastrar o visitante pelo formulário de registro de visita.
 - Porém, também é possível apenas cadastrar o visitante em outro formulário (**também pode pesquisar o CPF**), sem registrar visita.
 - A **foto do visitante** pode ser anexada por **upload de arquivo** ou por **foto capturada via webcam**.
+
+# ALGUNS USUÁRIOS PADRÕES GERADOS VIA SEEDS
+- Admin: admin@example.com, senha123
+- Funcionário: funcionario1@example.com, senha123
+- Atendente: atendenteA@example.com, senha123
+- Existem outros usuários no arquivo seeds.rb
